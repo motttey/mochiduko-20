@@ -5,7 +5,7 @@ export default {
   ** Nuxt rendering mode
   ** See https://nuxtjs.org/api/configuration-mode
   */
-  mode: 'spa',
+  ssr: false,
   /*
   ** Nuxt target
   ** See https://nuxtjs.org/api/configuration-target
@@ -71,11 +71,19 @@ export default {
     '@nuxtjs/proxy',
     '@nuxtjs/google-gtag'
   ],
+  axios: {
+     proxy: true
+   },
   proxy: {
     '/pixiv':
     {
       target: 'http://embed.pixiv.net/decorate.php',
       pathRewrite: {'^/pixiv': ''}
+    },
+    '/links':
+    {
+      target: process.env.GOOGLE_API_URL,
+      pathRewrite: {'^/links': ''}
     },
     '/motttey':
     {
@@ -112,6 +120,10 @@ export default {
   },
   router: {
     base: '/mochiduko-20/'
+  },
+  env: {
+    PIXIV_API_URL: process.env.PIXIV_API_URL,
+    GOOGLE_API_URL: process.env.GOOGLE_API_URL
   },
   fontawesome: {
     imports: [
