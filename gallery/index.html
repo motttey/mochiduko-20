@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
+	<meta charset = "utf-8">
+	<meta name="viewport" content="width=1280">
+	<meta author = "望月田吾作">
+	<meta description = "望月 田吾作(もちづき たごさく)が描いたドラえもんをはじめとした絵や漫画の掲載を目的としたサイト.">
+	<meta keyword="望月田吾作,Tagosaku Mochiduki,ドラえもん,Doraemon,イラスト">
+
+	<link rel="stylesheet" type="text/css" href="../dist/semantic.min.css">
+	<link rel="stylesheet" type="text/css" href="../style.css" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css" />
+
+	<link href="https://fonts.googleapis.com/css?family=Passion+One" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP:100" rel="stylesheet">
+
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<script type="text/javascript" src="./three.js/build/three.js"></script>
+	<script type="text/javascript" src="./three.js/examples/js/controls/OrbitControls.js"></script>
+
+	<script src="../dist/semantic.min.js"></script>
+	<script src="../jquery.inview/jquery.inview.min.js"></script>
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+	<script src="main.js"></script>
+
+	<title>モチヅ庫</title>
+</head>
+
+<body>
+	<div id="header">
+    <!-- <h1>Illust Gallery</h1> -->
+	</div>
+	<div class="ui grid">
+		<div class="one column row">
+			<div class="column">
+  			<div id="canvas_holder" > </div>
+			</div>
+		</div>
+	</div>
+
+	<div id="description" class="ui card">
+		<div class="blurring dimmable image">
+			<div class="ui inverted dimmer">
+				<div class="content">
+				</div>
+			</div>
+      <img id="image_thumb"/>
+		</div>
+		<div class="≈">
+      <a id="image_url">
+        <h2 id="image_title">
+          Title
+        </h2>
+      </a>
+			<div class="meta">
+				<p id="image_date">2019</p>
+				<p id="image_tags">#tags</p>
+			</div>
+		</div>
+	</div>
+</body>
