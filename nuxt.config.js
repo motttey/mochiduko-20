@@ -10,15 +10,15 @@ export default {
   ** Nuxt target
   ** See https://nuxtjs.org/api/configuration-target
   */
-  target: 'server',
+  target: 'static',
   /*
   ** Headers of the page
   ** See https://nuxtjs.org/api/configuration-head
   */
   head: {
     // titleTemplate: '%s - ' + 'モチヅ庫',
-    titleTemplate: 'モチヅ庫',
-    title: process.env.npm_package_name || '',
+    titleTemplate: 'モチヅ庫 | %s',
+    // title: process.env.npm_package_name || '',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0' },
@@ -60,7 +60,8 @@ export default {
   ** Nuxt.js dev-modules
   */
   buildModules: [
-    '@nuxtjs/vuetify'
+    '@nuxtjs/vuetify',
+    '@nuxt/postcss8'
   ],
   /*
   ** Nuxt.js modules
@@ -82,8 +83,13 @@ export default {
     },
     '/links':
     {
-      target: process.env.GOOGLE_API_URL,
+      target: process.env.LINKS_API_URL,
       pathRewrite: {'^/links': ''}
+    },
+    '/stories':
+    {
+      target: process.env.STORIES_API_URL,
+      pathRewrite: {'^/stories': ''}
     },
     '/motttey':
     {
@@ -117,13 +123,25 @@ export default {
   ** See https://nuxtjs.org/api/configuration-build/
   */
   build: {
+    postcss: {
+      hideNothingWarning: true,
+      plugins: {
+        'postcss-url': false
+      },
+      preset: {
+        autoprefixer: {
+          grid: true
+        }
+      }
+    }
   },
   router: {
     base: '/'
   },
   env: {
     PIXIV_API_URL: process.env.PIXIV_API_URL,
-    GOOGLE_API_URL: process.env.GOOGLE_API_URL
+    LINKS_API_URL: process.env.LINKS_API_URL,
+    STORIES_API_URL: process.env.STORIES_API_URL
   },
   fontawesome: {
     imports: [
