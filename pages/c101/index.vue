@@ -15,6 +15,26 @@
             </section>
             <section>
                 Section 2
+                <carousel perPage=1>
+                  <slide>
+                    Slide 1 Content
+                  </slide>
+                  <slide>
+                    Slide 2 Content
+                  </slide>
+                  <slide>
+                    Slide 3 Content
+                  </slide>
+                  <slide>
+                    Slide 4 Content
+                  </slide>
+                  <slide>
+                    Slide 5 Content
+                  </slide>
+                  <slide>
+                    Slide 6 Content
+                  </slide>
+                </carousel>
             </section>
         </v-container>
     </v-flex>
@@ -22,8 +42,14 @@
 </template>
 
 <script>
+import { Carousel, Slide } from 'vue-carousel';
+
 export default {
-    name: "C101",
+  name: "C101",
+  components: {
+    Carousel,
+    Slide
+  }
 }
 
 </script>
