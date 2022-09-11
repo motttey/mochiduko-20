@@ -11,7 +11,8 @@
       >
         <v-container fluid>
             <section>
-                Section 1
+                <h1 class="text-6rem">Headline</h1>
+                <p>Content</p>
             </section>
             <section>
                 Section 2
@@ -36,6 +37,9 @@
                   </slide>
                 </carousel>
             </section>
+            <section>
+                <p>Copyright</p>
+            </section>
         </v-container>
     </v-flex>
   </v-layout>
@@ -46,6 +50,9 @@ import { Carousel, Slide } from 'vue-carousel';
 
 export default {
   name: "C101",
+  head: () => ({
+    title: " C101"
+  }),
   components: {
     Carousel,
     Slide
