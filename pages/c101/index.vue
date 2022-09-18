@@ -10,21 +10,26 @@
         md9
       >
         <v-container fluid>
-            <section>
-                <h1 class="text-6rem">Headline</h1>
-                <p>Content</p>
-            </section>
-            <section>
-                Section 2
-                <carousel perPage=1>
-                  <slide v-for="slideContent in slideContentList" v-bind:key="slideContent.id">
-                    {{slideContent.content}}
-                  </slide>
-                </carousel>
-            </section>
-            <section>
-                <p>Copyright</p>
-            </section>
+          <section>
+            <h1 class="text-6rem">Headline</h1>
+            <p>Content</p>
+          </section>
+          <section>
+            <h1 class="text-6rem">Section 2</h1>
+            <carousel 
+              :perPage="1"
+              :touchDrag="true"
+              :navigationEnabled="true"
+              @slideclick="handleSlideClick"
+            >
+              <slide v-for="slideContent in slideContentList" v-bind:key="slideContent.id">
+                {{slideContent.content}}
+              </slide>
+            </carousel>
+          </section>
+          <section>
+            <p>Copyright</p>
+          </section>
         </v-container>
     </v-flex>
   </v-layout>
@@ -41,6 +46,11 @@ export default {
   components: {
     Carousel,
     Slide
+  },
+  methods: {
+    handleSlideClick: (dataset) => {
+      console.log(dataset.index, dataset.name)
+    }
   },
   data () {
     return {
