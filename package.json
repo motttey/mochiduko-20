@@ -26,7 +26,7 @@
     "three": "^0.143.0",
     "vue": "^2.7.10",
     "vue-carousel": "^0.18.0",
-    "vue-scrollto": "^2.18.2"
+    "vue-scrollto": "^2.20.0"
   },
   "devDependencies": {
     "@nuxtjs/google-analytics": "^2.4.0",
