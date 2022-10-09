@@ -89,4 +89,8 @@ export default {
 section {
     height: calc(100vh - 75px);
 }
+
+h1, h2, h3, p {
+  font-family: 'Klee One', cursive;
+}
 </style>
