@@ -15,6 +15,12 @@
             <p>Content</p>
           </section>
           <section>
+            <h1 class="text-6rem">Description</h1>
+            <h2>発売日: 2022/XX/XX</h2>
+            <p>Content</p>
+
+          </section>
+          <section>
             <h1 class="text-6rem">Section 2</h1>
             <carousel 
               :perPage="1"
@@ -28,7 +34,8 @@
             </carousel>
           </section>
           <section>
-            <p>Copyright</p>
+            <h1>Copyright</h1>
+            <p>関連リンクや詳細など</p>
           </section>
         </v-container>
     </v-flex>
@@ -80,6 +87,6 @@ export default {
 
 <style scoped>
 section {
-    height: 100vh;
+    height: calc(100vh - 75px);
 }
 </style>
