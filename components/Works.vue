@@ -88,8 +88,10 @@
       model: null,
       maincard: new Object(),
       cards: [
+        { title: 'THE BOOK OF CIRCLES', year: 2022, src: '/mochiduko-20/bookofcircles.jpg',
+        url: 'https://www.pixiv.net/artworks/103332022', description: '2018-2022年に描いたドラえもんイラストメインにしたイラスト集です. C101にて頒布. B5 フルカラー / 36ページ (本文32ページ)', flex: 6 },
         { title: 'Perfect Blue', year: 2017, src: '/mochiduko-20/perfectblue.jpg',
-        url: 'https://motitago.booth.pm/items/746036', description: '青色のイラストをメインにしたイラスト集です. C93にて頒布. B5 フルカラー / 32ページ (本文28ページ)', flex: 6 },
+        url: 'https://www.pixiv.net/artworks/66256659', description: '青色のイラストをメインにしたイラスト集です. C93にて頒布. (C101で再販) B5 フルカラー / 32ページ (本文28ページ)', flex: 6 },
         { title: 'DORA THE PAST', year: 2016, src: '/mochiduko-20/dorathepast.jpg',
         url: 'https://www.deviantart.com/motttey', description: '[SOLD OUT] 2008-2016あたりに描いてきたドラえもん関連イラストの総集編 + 描き下しイラストな画集っぽい感じの本です. C91にて頒布 B5 96ページ, 収録作品数189', flex: 6 },
         { title: 'パラレルソレイユ 9',  year: 2017, src: '/mochiduko-20/parallel9.jpg',
