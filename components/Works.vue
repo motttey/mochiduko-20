@@ -90,6 +90,8 @@
       cards: [
         { title: 'THE BOOK OF CIRCLES', year: 2022, src: '/mochiduko-20/bookofcircles.jpg',
         url: 'https://www.pixiv.net/artworks/103332022', description: '2018-2022年に描いたドラえもんイラストメインにしたイラスト集です. C101にて頒布. B5 フルカラー / 36ページ (本文32ページ)', flex: 6 },
+        {title: 'フジコ・スピリット', year: 2022, src: '/mochiduko-20/fujikospirits.jpg',
+        url: 'https://motttey.github.io/c101-landing', description: '藤子不二雄作品が好きな11名による一次創作合同誌 表紙を担当', flex: 6 },
         { title: 'Perfect Blue', year: 2017, src: '/mochiduko-20/perfectblue.jpg',
         url: 'https://www.pixiv.net/artworks/66256659', description: '青色のイラストをメインにしたイラスト集です. C93にて頒布. (C101で再販) B5 フルカラー / 32ページ (本文28ページ)', flex: 6 },
         { title: 'DORA THE PAST', year: 2016, src: '/mochiduko-20/dorathepast.jpg',
@@ -98,7 +100,6 @@
         url: 'https://booth.pm/ja/items/723395', description: 'ひぐちあき様主催の藤子ファンの藤子ファンによる藤子ファンのための同人誌です. 表紙イラストを担当し, 喪黒さんを描かせていただきました. C93頒布. カラーページ込みA5 102ページ', flex: 6 },
         { title: 'モチヅ庫 10th Special Site', src: '/mochiduko-20/10th.png',
         url: 'https://motttey.github.io/10th/', description: 'pixivに登録して10年たった記念に作ったサイトです. pixivのイラストをタグで検索できたり, 投稿数の統計とかもみれます. お祝いのコメントも入力できるのでお待ちしてます. ', flex: 6 },
-        { title: 'TBD', src: '/mochiduko-20/doraemon-namecard.webp', url: 'https://www.deviantart.com/motttey', description: 'hogehoge', flex: 6 },
       ],
     }),
     mounted: function(){
