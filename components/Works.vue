@@ -26,6 +26,7 @@
                     :src="card.src"
                     :lazy-src="card.src"
                     max-width="200px"
+                    width="200px"
                     aspect-ratio="1"
                     class="grey lighten-4"
                     gradient="to bottom, rgba(0,0,0,.5), rgba(0,0,0,.1)"
@@ -89,7 +90,7 @@
         { title: 'THE BOOK OF CIRCLES', year: 2022, src: '/mochiduko-20/bookofcircles.jpg',
         url: 'https://www.pixiv.net/artworks/103332022', description: '2018-2022年に描いたドラえもんイラストメインにしたイラスト集です. C101にて頒布. B5 フルカラー / 36ページ (本文32ページ)', flex: 6 },
         {title: 'フジコ・スピリット', year: 2022, src: '/mochiduko-20/fujikospirits.jpg',
-        url: 'https://motttey.github.io/c101', description: '藤子不二雄作品が好きな11名による一次創作合同誌 表紙イラストを担当', flex: 6 },
+        url: 'https://motttey.github.io/c101/', description: '藤子不二雄作品が好きな11名による一次創作合同誌 表紙イラストを担当', flex: 6 },
         { title: 'モチヅ庫 10th Special Site', year: 2018, src: '/mochiduko-20/10th.png',
         url: 'https://motttey.github.io/10th/', description: 'pixivに登録して10年たった記念に作ったサイトです. pixivのイラストをタグで検索できたり, 投稿数の統計とかもみれます. お祝いのコメントも入力できるのでお待ちしてます. ', flex: 6 },
         { title: 'Perfect Blue', year: 2017, src: '/mochiduko-20/perfectblue.jpg',
