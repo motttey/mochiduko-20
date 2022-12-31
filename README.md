@@ -29,5 +29,5 @@ For detailed explanation on how things work, check out [Nuxt.js docs](https://nu
 ```bash
 $ git checkout deploy-master
 $ npm run generate
-$ git subtree push --prefix dist origin2 masterv3
+$ git subtree push --prefix dist origin2 deploy-master-v2
 ```
