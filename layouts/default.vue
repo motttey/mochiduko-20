@@ -56,11 +56,22 @@
       <v-list>
         <v-list-item
           v-for="(item, i) in items"
-          :key="i"
+          :key="'to' + i.toString()"
           link
         >
           <v-list-item-content v-scroll-to="item.to">
             <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item
+          v-for="(item, i) in linkItems"
+          :key="'href' + i.toString()"
+          link
+        >
+          <v-list-item-content>
+            <a :href="item.href" style="color:azure">
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </a>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -147,6 +158,20 @@ export default {
         {
           title: 'Link',
           to: '#LinkCards'
+        }
+      ],
+      linkItems: [
+        {
+          title: 'C101',
+          href: '/C101'
+        },
+        {
+          title: 'Links (external)',
+          href: '/link'
+        },
+        {
+          title: 'Stories',
+          href: '/stories'
         }
       ],
       miniVariant: false,
