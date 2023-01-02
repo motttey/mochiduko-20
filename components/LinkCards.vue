@@ -48,7 +48,9 @@
     data: () => ({
       cards: [
         { title: 'pixiv', src: process.env.PIXIV_API_URL +  '?illust_id=56266129',
-        url: 'https://www.pixiv.net/users/415546', flex: 12 },
+        url: 'https://www.pixiv.net/users/415546', flex: 6 },
+        { title: 'BOOTH', src: process.env.PIXIV_API_URL +  '?illust_id=58885220',
+        url: 'https://motitago.booth.pm/', flex: 6 },
         { title: 'deviantART', src: process.env.PIXIV_API_URL +  '?illust_id=49554002',
         url: 'https://www.deviantart.com/motttey', flex: 6 },
         { title: 'weibo',  src: process.env.PIXIV_API_URL + '?illust_id=56608401',
