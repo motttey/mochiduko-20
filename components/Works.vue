@@ -1,7 +1,7 @@
 <template>
   <v-container fluid id="Works">
     <h1>Works</h1>
-    <h3>同人誌とかをまとめてポートフォリオにしたいですね。</h3>
+    <h3>頒布した同人誌や寄稿, そのほか"望月田吾作"名義で実施したプロジェクトをまとめています。</h3>
     <v-row>
       <v-col cols="12" sm="12">
         <v-sheet
@@ -16,9 +16,9 @@
           >
             <v-slide-item
               v-for="card in cards"
-              class="mx-3"
               :key="card.title"
-              v-slot:default="{ active, toggle }"
+              class="mx-3"
+              v-slot:default="{ _, toggle }"
             >
               <v-card flat hover
                 @click="toggle">
@@ -43,7 +43,6 @@
         </v-sheet>
       </v-col>
     </v-row>
-
     <v-row dense class="my-6">
        <v-col cols="12" sm="6" offset-sm="3">
          <v-card flat>
@@ -99,7 +98,7 @@
         url: 'https://booth.pm/ja/items/723395', description: 'ひぐちあき様主催の藤子ファンの藤子ファンによる藤子ファンのための同人誌です. 表紙イラストを担当し, 喪黒さんを描かせていただきました. C93頒布. カラーページ込みA5 102ページ', flex: 6 },
         { title: 'DORA THE PAST', year: 2016, src: '/mochiduko-20/dorathepast.jpg',
         url: 'https://www.deviantart.com/motttey', description: '[SOLD OUT] 2008-2016あたりに描いてきたドラえもん関連イラストの総集編 + 描き下しイラストな画集っぽい感じの本です. C91にて頒布 B5 96ページ, 収録作品数189', flex: 6 },
-    ],
+      ],
     }),
     mounted: function(){
       this.maincard = this.cards[0];
