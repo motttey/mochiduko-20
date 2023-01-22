@@ -20,6 +20,7 @@
                       :src="card.src"
                       :elevation="hover ? 12 : 2"
                       class="white--text align-end"
+                      loading="lazy"
                       position='50% 80%'
                       gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.8)"
                       height="250px"
