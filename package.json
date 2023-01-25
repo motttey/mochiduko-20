@@ -8,7 +8,8 @@
     "start": "nuxt start",
     "export": "nuxt export",
     "serve": "nuxt serve",
-    "test": "jest",
+    "test": "jest --verbose ./test/*.spec.js",
+    "vis-test": "npx playwright test",
     "generate": "nuxt generate"
   },
   "dependencies": {
