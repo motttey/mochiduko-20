@@ -91,3 +91,7 @@ sw.*
 
 # vscode files
 .vscode
+/test-results/
+/playwright-report/
+/playwright/.cache/
+/tests-examples/
