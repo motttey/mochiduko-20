@@ -10,6 +10,12 @@ test('has title', async ({ page }) => {
   await expect(page).toHaveTitle(/モチヅ庫/);
 });
 
+// external web site
+test('has title 2', async ({ page }) => {
+  await page.goto(mochidukoUrl + '/c101');
+  await expect(page).toHaveTitle(/モチヅ庫/);
+});
+
 test('screenshot', async () => {
   const browser = await webkit.launch()
   const context = await browser.newContext()
