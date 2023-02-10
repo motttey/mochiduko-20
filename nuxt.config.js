@@ -63,8 +63,7 @@ export default {
   ** Nuxt.js dev-modules
   */
   buildModules: [
-    '@nuxtjs/vuetify',
-    '@nuxt/postcss8'
+    '@nuxtjs/vuetify'
   ],
   /*
   ** Nuxt.js modules
@@ -125,19 +124,7 @@ export default {
   ** Build configuration
   ** See https://nuxtjs.org/api/configuration-build/
   */
-  build: {
-    postcss: {
-      hideNothingWarning: true,
-      plugins: {
-        'postcss-url': false
-      },
-      preset: {
-        autoprefixer: {
-          grid: true
-        }
-      }
-    }
-  },
+  build: {},
   router: {
     base: '/mochiduko-20/'
   },
