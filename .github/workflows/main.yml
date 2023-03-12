@@ -10,7 +10,8 @@ env:
   GOOGLE_ANALYTICS_ID: ${{secrets.GOOGLE_ANALYTICS_ID}} 
   PIXIV_API_URL: ${{secrets.PIXIV_API_URL}} 
   LINKS_API_URL: ${{secrets.LINKS_API_URL}} 
-  STORIES_API_URL: ${{secrets.STORIES_API_URL}} 
+  STORIES_API_URL: ${{secrets.STORIES_API_URL}}
+  CHATGPT_TOKEN: ${{secrets.CHATGPT_TOKEN}} 
 
 jobs:
   deploy:

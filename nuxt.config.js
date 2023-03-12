@@ -131,7 +131,8 @@ export default {
   env: {
     PIXIV_API_URL: process.env.PIXIV_API_URL,
     LINKS_API_URL: process.env.LINKS_API_URL,
-    STORIES_API_URL: process.env.STORIES_API_URL
+    STORIES_API_URL: process.env.STORIES_API_URL,
+    CHATGPT_TOKEN: process.env.CHATGPT_TOKEN
   },
   fontawesome: {
     imports: [
