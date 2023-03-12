@@ -9,13 +9,16 @@
             sm12
             md12
         >
-            <v-container fluid>
+            <v-container fluid class="my-1">
                 <v-row>
                     <h1>しつもん! ドラえもん</h1>
                 </v-row>
                 <v-row>
                     <v-col>
-                        <v-row v-for="(msg, i) in messages" :key="i" dense>
+                        <v-row 
+                            class="baloon-container"
+                            v-for="(msg, i) in messages" :key="i"
+                        >
                             <v-col>
                                 <div :class="[msg.isClient ? 'balloon_r' : 'balloon_l']">
                                     <div class="face_icon">
@@ -35,13 +38,15 @@
                     </v-col>
                 </v-row>
                 <v-row>
-                    <v-text-field
+                    <v-textarea
+                        auto-grow
+                        rows="2"
                         label="ドラえもんにしつもん"
-                        v-model="question"
                         append-icon="mdi-send"
                         variant="outlined"
+                        v-model="question"
                         @click:append="sendQuestion"
-                    ></v-text-field>
+                    ></v-textarea>
                 </v-row>
             </v-container>
         </v-flex>
@@ -52,18 +57,11 @@
         name: "Chat",
         components: {},
         head: () => ({
-            title: " Chat"
+            title: "Chat"
         }),
         data: () => ({
             question: '',
             messages: [
-                {
-                    'name': 'ドラえもん',
-                    'message': 'こんにちは, ぼくドラえもんです。',
-                    "isClient": false,
-                    'avatar_src': "/mochiduko-20/doraemon-namecard.webp",
-                    'avatar_color': "#0288D1",
-                }
             ]
         }),
         methods: {
@@ -101,10 +99,10 @@
                 if (!this.question) return;
 
                 this.messages.push({
-                    'name': '俺',
+                    'name': '望月',
                     'message': this.question,
                     "isClient": true,
-                    'avatar_src': "/mochiduko-20/doraemon-namecard.webp",
+                    'avatar_src': "/mochiduko-20/rasaicon.webp",
                     'avatar_color': "#E3F2FD",
                 });
                 this.fetchChatResponse(this.question)
@@ -117,7 +115,18 @@
             }
         },
         async created () {
-            await this.fetchChatResponse('これ以降の対話では、あなたは「ドラえもん」として振る舞ってください。ドラえもんは22世紀から来た猫型ロボットです。それでは、質問者として挨拶をしてください。')
+            this.messages.push({
+                'name': 'ドラえもん',
+                'message': 'こんにちは, ぼくドラえもんです。',
+                "isClient": false,
+                'avatar_src': "/mochiduko-20/doraemon-namecard.webp",
+                'avatar_color': "#0288D1",
+            })
+            /*
+            await this.fetchChatResponse(
+                'これ以降の対話では、あなたは「ドラえもん」として振る舞ってください。ドラえもんは22世紀から来た猫型ロボットです。それでは、質問者として挨拶をしてください。'
+            )
+            */
         }
     }
 </script>
@@ -126,6 +135,9 @@
     h1 {
         text-align: center;
         justify-content: center;
+    }
+    .baloon-container {
+        margin: 0px 50px;
     }
     .balloon_l, .balloon_r {
         margin: 10px 0;
@@ -156,7 +168,6 @@
         order: 2 !important;
     }
     .says {
-        max-width: 300px;
         display: flex;
         flex-wrap: wrap;
         position: relative;
