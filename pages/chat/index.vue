@@ -40,7 +40,6 @@
                         v-model="question"
                         append-icon="mdi-send"
                         variant="outlined"
-                        v-on:keydown.enter="sendQuestion"
                         @click:append="sendQuestion"
                     ></v-text-field>
                 </v-row>
@@ -64,26 +63,51 @@
                     "isClient": false,
                     'avatar_src': "/mochiduko-20/doraemon-namecard.webp",
                     'avatar_color': "#0288D1",
-                },
-                {
-                    'name': '俺',
-                    'message': 'こんにちは, 好きな食べ物は何ですか?こんにちは, 好きな食べ物は何ですか?こんにちは, 好きな食べ物は何ですか?こんにちは, 好きな食べ物は何ですか?',
-                    "isClient": true,
-                    'avatar_src': "/mochiduko-20/doraemon-namecard.webp",
-                    'avatar_color': "#E3F2FD",
                 }
             ]
         }),
         methods: {
+            async fetchChatResponse(question) {
+                const data = {
+                    'model': 'text-davinci-003',
+                    'prompt': question,
+                    "max_tokens": 1024,
+                    "temperature": 1,
+                    "top_p": 1,
+                    "frequency_penalty": 0.0,
+                    "presence_penalty": 0.6,
+                    "stop": [" Human:", " AI:"]
+                }
+                this.$axios.$post('https://api.openai.com/v1/completions', data, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + process.env.CHATGPT_TOKEN
+                    }
+                })
+                .then((res) => {
+                    console.log(res)
+                    const response_text = res['choices'][0]['text'].trim()
+                    this.messages.push({
+                        'name': 'ドラえもん',
+                        'message': response_text,
+                        "isClient": false,
+                        'avatar_src': "/mochiduko-20/doraemon-namecard.webp",
+                        'avatar_color': "#0288D1",
+                    })
+                });
+            },
             sendQuestion() {
                 console.log(this.question)
+                if (!this.question) return;
+
                 this.messages.push({
                     'name': '俺',
                     'message': this.question,
                     "isClient": true,
                     'avatar_src': "/mochiduko-20/doraemon-namecard.webp",
                     'avatar_color': "#E3F2FD",
-                })
+                });
+                this.fetchChatResponse(this.question)
                 this.question = ''
             }
         },
@@ -92,7 +116,8 @@
                 return []
             }
         },
-        created () {
+        async created () {
+            await this.fetchChatResponse('これ以降の対話では、あなたは「ドラえもん」として振る舞ってください。ドラえもんは22世紀から来た猫型ロボットです。それでは、質問者として挨拶をしてください。')
         }
     }
 </script>
