@@ -34,6 +34,16 @@
                         </v-row>
                     </v-col>
                 </v-row>
+                <v-row>
+                    <v-text-field
+                        label="ドラえもんにしつもん"
+                        v-model="question"
+                        append-icon="mdi-send"
+                        variant="outlined"
+                        v-on:keydown.enter="sendQuestion"
+                        @click:append="sendQuestion"
+                    ></v-text-field>
+                </v-row>
             </v-container>
         </v-flex>
     </v-layout>
@@ -43,32 +53,44 @@
         name: "Chat",
         components: {},
         head: () => ({
-        title: " Chat"
+            title: " Chat"
         }),
         data: () => ({
-        messages: [
-            {
-                'name': 'ドラえもん',
-                'message': 'こんにちは, ぼくドラえもんです。',
-                "isClient": false,
-                'avatar_src': "/mochiduko-20/doraemon-namecard.webp",
-                'avatar_color': "#0288D1",
-            },
-            {
-                'name': '俺',
-                'message': 'こんにちは, 好きな食べ物は何ですか?こんにちは, 好きな食べ物は何ですか?こんにちは, 好きな食べ物は何ですか?こんにちは, 好きな食べ物は何ですか?',
-                "isClient": true,
-                'avatar_src': "/mochiduko-20/doraemon-namecard.webp",
-                'avatar_color': "#E3F2FD",
-            }
-        ]
+            question: '',
+            messages: [
+                {
+                    'name': 'ドラえもん',
+                    'message': 'こんにちは, ぼくドラえもんです。',
+                    "isClient": false,
+                    'avatar_src': "/mochiduko-20/doraemon-namecard.webp",
+                    'avatar_color': "#0288D1",
+                },
+                {
+                    'name': '俺',
+                    'message': 'こんにちは, 好きな食べ物は何ですか?こんにちは, 好きな食べ物は何ですか?こんにちは, 好きな食べ物は何ですか?こんにちは, 好きな食べ物は何ですか?',
+                    "isClient": true,
+                    'avatar_src': "/mochiduko-20/doraemon-namecard.webp",
+                    'avatar_color': "#E3F2FD",
+                }
+            ]
         }),
         methods: {
+            sendQuestion() {
+                console.log(this.question)
+                this.messages.push({
+                    'name': '俺',
+                    'message': this.question,
+                    "isClient": true,
+                    'avatar_src': "/mochiduko-20/doraemon-namecard.webp",
+                    'avatar_color': "#E3F2FD",
+                })
+                this.question = ''
+            }
         },
         computed: {
-        headers() {
-            return []
-        }
+            headers() {
+                return []
+            }
         },
         created () {
         }
