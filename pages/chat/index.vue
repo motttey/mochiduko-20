@@ -46,6 +46,7 @@
                         variant="outlined"
                         v-model="question"
                         @click:append="sendQuestion"
+                        @keyup.enter.shift="sendQuestion"
                     ></v-textarea>
                 </v-row>
             </v-container>
@@ -146,6 +147,7 @@
         margin: 0px 50px;
     }
     .balloon_l, .balloon_r {
+        max-width: 500px;
         margin: 10px 0;
         display: flex;
         justify-content: flex-start;
