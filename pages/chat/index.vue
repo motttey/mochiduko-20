@@ -29,9 +29,9 @@
                                             ></v-img>
                                         </v-avatar>
                                     </div>
-                                    <p class="says">
-                                        {{ msg.message }}
-                                    </p>
+                                    <div class="says">
+                                        <p class="message">{{ msg.message }}</p>
+                                    </div>
                                 </div>
                             </v-col>
                         </v-row>
@@ -89,10 +89,11 @@
             },
             sendQuestion() {
                 console.log(this.question)
-                if (!this.question) return;
+                const question = this.question.trim()
+                if (!question && question.length <= 1) return;
 
-                this.messages.push(this.getMessageObject(this.question, true))
-                this.fetchChatResponse(this.question)
+                this.messages.push(this.getMessageObject(question, true))
+                this.fetchChatResponse(question)
                 this.question = ''
             },
             async fetchChatResponse(question) {
@@ -183,8 +184,11 @@
         border-radius: 12px;
         background: #0288D1;
         box-sizing: border-box;
-        margin: 0;
         line-height: 1.5;
+    }
+
+    p.message {
+        white-space: pre-wrap;
     }
 
     .balloon_l .says {
