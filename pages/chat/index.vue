@@ -115,8 +115,8 @@ export default {
                 "stop": [" Human:", " AI:"]
             }
         },
-        async fetchEmotion() {
-            const input = "先ほどの回答がポジティブな感情に基づくものなら「###ポジ」、"
+        async fetchEmotion(answer) {
+            const input = "あなたが行った回答「"+answer+"」がポジティブな感情に基づくものなら「###ポジ」、"
                 + "ネガティブな感情に基づくものであれば「###ネガ」と出力してください。"
                 + "どちらにも該当しない場合は「###」と出力してください。"
             this.$axios.$post(this.openai_api_endpoint, this.getParams(input), {
@@ -150,7 +150,7 @@ export default {
                 console.log(res)
                 let response_text = res['choices'][0]['text'].trim()
                 if (response_text.length <= 1) response_text = '...'
-                await this.fetchEmotion()
+                else await this.fetchEmotion(response_text)
                 this.messages.push(this.getMessageObject(response_text, false))
             });
         },
