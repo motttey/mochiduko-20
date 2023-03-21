@@ -116,7 +116,9 @@ export default {
             }
         },
         async fetchEmotion() {
-            const input = "先ほどの回答がポジティブな感情に基づくものなら「###ネガ」、ネガティブな感情に基づくものであれば「###ポジ」と出力してください。どちらにも該当しない場合は「###」と出力してください。"
+            const input = "先ほどの回答がポジティブな感情に基づくものなら「###ポジ」、"
+                + "ネガティブな感情に基づくものであれば「###ネガ」と出力してください。"
+                + "どちらにも該当しない場合は「###」と出力してください。"
             this.$axios.$post(this.openai_api_endpoint, this.getParams(input), {
                 headers: {
                     'Content-Type': 'application/json',
