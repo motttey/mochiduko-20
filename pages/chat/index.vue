@@ -10,10 +10,10 @@
             md12
         >
             <v-container fluid class="my-1">
-                <v-row>
-                    <h1>しつもん! ドラえもん</h1>
+                <v-row class="header">
+                    <h1 class="text-center">しつもん! ドラえもん</h1>
                 </v-row>
-                <v-row>
+                <v-row class="chat">
                     <v-col>
                         <v-row 
                             class="baloon-container"
@@ -118,22 +118,25 @@ export default {
             const input = "あなたが行った回答「"+answer+"」がポジティブな感情に基づくものなら「###ポジ」、"
                 + "ネガティブな感情に基づくものであれば「###ネガ」と出力してください。"
                 + "どちらにも該当しない場合は「###」と出力してください。"
-            this.$axios.$post(this.openai_api_endpoint, this.getParams(input, "system"), {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + process.env.CHATGPT_TOKEN
-                }
-            })
-            .then((res) => {
-                const response_code = res['choices'][0]['message'].content.trim()
-                console.log(response_code)
+            return new Promise((resolve, reject) => {
+                this.$axios.$post(this.openai_api_endpoint, this.getParams(input, "system"), {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + process.env.CHATGPT_TOKEN
+                    }
+                })
+                .then((res) => {
+                    const response_code = res['choices'][0]['message'].content.trim()
+                    console.log(response_code)
 
-                if (response_code.includes('ネガ')) 
-                    this.doraemon_properties.avatar_src = this.image_properties.DORAEMON_NEGATIVE_AVATAR
-                else if (response_code.includes('ポジ')) 
-                    this.doraemon_properties.avatar_src = this.image_properties.DORAEMON_POSITIVE_AVATAR
-                else 
-                    this.doraemon_properties.avatar_src = this.image_properties.DORAEMON_DEFAULT_AVATAR
+                    if (response_code.includes('ネガ')) 
+                        resolve(this.image_properties.DORAEMON_NEGATIVE_AVATAR)
+                    else if (response_code.includes('ポジ')) 
+                        resolve(this.image_properties.DORAEMON_POSITIVE_AVATAR)
+                    else 
+                        resolve(this.image_properties.DORAEMON_DEFAULT_AVATAR)
+                })
+                .catch(error => reject(error))
             });
         },
         async fetchChatResponse(params) {
@@ -149,7 +152,8 @@ export default {
                 if (response_text.length <= 1) {
                     this.messages.push(this.getMessageObject('...', false))
                 } {
-                    this.fetchEmotion(response_text).then(() => {
+                    this.fetchEmotion(response_text).then((res_img_path) => {
+                        this.doraemon_properties.avatar_src = res_img_path
                         this.messages.push(this.getMessageObject(response_text, false))
                     })
                 }
