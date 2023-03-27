@@ -13,16 +13,19 @@
                 <v-row class="header">
                     <h1 class="text-center">しつもん! ドラえもん</h1>
                 </v-row>
-                <v-row class="chat">
-                    <v-col>
+                <v-row class="chat-container">
+                    <v-col class="chat-column">
                         <v-row 
                             class="baloon-container"
                             v-for="(msg, i) in messages" :key="i"
                         >
-                            <v-col>
+                            <v-col class="baloon-columns">
                                 <div :class="[msg.isClient ? 'balloon_r' : 'balloon_l']">
                                     <div class="face_icon">
-                                        <v-avatar :color="msg.avatar_color">
+                                        <v-avatar 
+                                            :class="msg.type"
+                                            :color="msg.avatar_color"
+                                        >
                                             <v-img
                                                 :src="msg.avatar_src"
                                                 :alt="msg.name"
@@ -44,6 +47,7 @@
                         label="ドラえもんにしつもん"
                         append-icon="mdi-send"
                         variant="outlined"
+                        class="doraemon-chat-input"
                         v-model="question"
                         @click:append="sendQuestion"
                         @keyup.enter.shift="sendQuestion"
@@ -69,12 +73,14 @@ export default {
         },
         question: '',
         questioner_properties: {
+            "type": "questioner",
             "name": "望月",
             "avatar_color": "#E3F2FD",
             "avatar_src":  "/mochiduko-20/rasaicon.webp",
             "isClient": true
         },
         doraemon_properties: {
+            "type": "doraemon",
             "name": "ドラえもん",
             "avatar_color": "#0288D1",
             "avatar_src":  "/mochiduko-20/doraemon-namecard.webp",
