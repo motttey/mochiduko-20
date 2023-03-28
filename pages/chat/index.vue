@@ -43,6 +43,8 @@
                 <v-row>
                     <v-textarea
                         auto-grow
+                        aria-multiline
+                        aria-label="ask to doraemon"
                         rows="2"
                         label="ドラえもんにしつもん"
                         append-icon="mdi-send"
@@ -90,6 +92,9 @@ export default {
         messages: []
     }),
     methods: {
+        getResponseMessage(res) {
+            return res?.choices[0]?.message?.content.trim() || '';
+        },
         getMessageObject(message, isClient) {
             console.log({
                 ...(isClient) ? this.questioner_properties : this.doraemon_properties,
@@ -132,7 +137,7 @@ export default {
                     }
                 })
                 .then((res) => {
-                    const response_code = res['choices'][0]['message'].content.trim()
+                    const response_code = this.getResponseMessage(res)
                     console.log(response_code)
 
                     if (response_code.includes('ネガ')) 
@@ -154,7 +159,7 @@ export default {
             })
             .then(async (res) => {
                 console.log(res)
-                let response_text = res['choices'][0]['message'].content.trim()
+                let response_text = this.getResponseMessage(res)
                 if (response_text.length <= 1) {
                     this.messages.push(this.getMessageObject('...', false))
                 } {
