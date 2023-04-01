@@ -89,7 +89,11 @@ export default {
             "isClient": false
         },
         openai_api_endpoint: "https://api.openai.com/v1/chat/completions",       
-        messages: []
+        messages: [],
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + process.env.CHATGPT_TOKEN
+        }
     }),
     methods: {
         getResponseMessage(res) {
@@ -130,12 +134,11 @@ export default {
                 + "ネガティブな感情に基づくものであれば「###ネガ」と出力してください。"
                 + "どちらにも該当しない場合は「###」と出力してください。"
             return new Promise((resolve, reject) => {
-                this.$axios.$post(this.openai_api_endpoint, this.getParams(input, "system"), {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer ' + process.env.CHATGPT_TOKEN
-                    }
-                })
+                this.$axios.$post(
+                    this.openai_api_endpoint,
+                    this.getParams(input, "system"), 
+                    { headers: this.headers }
+                )
                 .then((res) => {
                     const response_code = this.getResponseMessage(res)
                     console.log(response_code)
@@ -151,12 +154,11 @@ export default {
             });
         },
         async fetchChatResponse(params) {
-            this.$axios.$post(this.openai_api_endpoint, params, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + process.env.CHATGPT_TOKEN
-                }
-            })
+            this.$axios.$post(
+                    this.openai_api_endpoint,
+                    params, 
+                    { headers: this.headers }
+            )
             .then(async (res) => {
                 console.log(res)
                 let response_text = this.getResponseMessage(res)
