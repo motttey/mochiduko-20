@@ -112,7 +112,7 @@ export default {
         sendQuestion() {
             console.log(this.question)
             const question = this.question.trim()
-            if (!question && question.length <= 1) return;
+            if (!question && question.length <= 1) return
 
             this.messages.push(this.getMessageObject(question, true))
             this.fetchChatResponse(this.getParams(question, "user"))
@@ -130,7 +130,7 @@ export default {
             }
         },
         async fetchEmotion(answer) {
-            const input = "あなたが行った回答「"+answer+"」がポジティブな感情に基づくものなら「###ポジ」、"
+            const input = "「"+answer+"」がポジティブな感情に基づくものなら「###ポジ」、"
                 + "ネガティブな感情に基づくものであれば「###ネガ」と出力してください。"
                 + "どちらにも該当しない場合は「###」と出力してください。"
             return new Promise((resolve, reject) => {
@@ -154,17 +154,24 @@ export default {
             });
         },
         async fetchChatResponse(params) {
+            const random_prefix = Math.random().toString(36).substring(1,10)
+            params.messages[0].content = params.messages[0].content + `\n回答の冒頭には「${random_prefix}」という文字列をつけてください。`
+            console.log(params)
             this.$axios.$post(
-                    this.openai_api_endpoint,
-                    params, 
-                    { headers: this.headers }
+                this.openai_api_endpoint,
+                params, 
+                { headers: this.headers }
             )
             .then(async (res) => {
                 console.log(res)
                 let response_text = this.getResponseMessage(res)
                 if (response_text.length <= 1) {
                     this.messages.push(this.getMessageObject('...', false))
-                } {
+                } else if (!response_text.includes(random_prefix)) {
+                    this.messages.push(this.getMessageObject('不正な質問です。きみはじつにばかだな。', false))
+                }
+                else {
+                    response_text = response_text.replace(random_prefix, '')
                     this.fetchEmotion(response_text).then((res_img_path) => {
                         this.doraemon_properties.avatar_src = res_img_path
                         this.messages.push(this.getMessageObject(response_text, false))
