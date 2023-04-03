@@ -13,6 +13,12 @@
                 <v-row class="header">
                     <h1 class="text-center">しつもん! ドラえもん</h1>
                 </v-row>
+                <v-row class="error" v-if="error_message">
+                    <v-alert
+                        ontlined
+                        type="error"
+                    >{{ error_message }}</v-alert>
+                </v-row>
                 <v-row class="chat-container">
                     <v-col class="chat-column">
                         <v-row 
@@ -93,7 +99,8 @@ export default {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + process.env.CHATGPT_TOKEN
-        }
+        },
+        error_message: ''
     }),
     methods: {
         getResponseMessage(res) {
@@ -178,7 +185,11 @@ export default {
                         this.messages.push(this.getMessageObject(response_text, false))
                     })
                 }
-            });
+                this.error_message = ''
+            }).catch((e) => {
+                console.log(e.toString())
+                this.error_message = e.toString()
+            })
         },
     },
     computed: {},
