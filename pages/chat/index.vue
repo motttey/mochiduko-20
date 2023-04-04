@@ -13,12 +13,6 @@
                 <v-row class="header">
                     <h1 class="text-center">しつもん! ドラえもん</h1>
                 </v-row>
-                <v-row class="error" v-if="error_message">
-                    <v-alert
-                        ontlined
-                        type="error"
-                    >{{ error_message }}</v-alert>
-                </v-row>
                 <v-row class="chat-container">
                     <v-col class="chat-column">
                         <v-row 
@@ -45,6 +39,16 @@
                             </v-col>
                         </v-row>
                     </v-col>
+                </v-row>
+                <v-row class="error-message" v-if="error_message">
+                    <v-alert
+                        outlined
+                        dense
+                        color="deep-orange"
+                        icon="mdi-fire"
+                    >
+                        {{ error_message }}
+                    </v-alert>
                 </v-row>
                 <v-row>
                     <v-textarea
