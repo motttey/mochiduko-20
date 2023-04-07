@@ -4,14 +4,19 @@
       justify-center
       align-center
     >
-        <v-flex
-            xs12
-            sm12
-            md12
-        >
+        <v-flex xs12 sm12 md12>
             <v-container fluid class="my-1">
                 <v-row class="header">
                     <h1 class="text-center">しつもん! ドラえもん</h1>
+                </v-row>
+                <v-row class="error-message mt-6" v-if="error_message">
+                    <v-alert
+                        outlined
+                        dense
+                        color="deep-orange"
+                    >
+                        {{ error_message }}
+                    </v-alert>
                 </v-row>
                 <v-row class="chat-container">
                     <v-col class="chat-column">
@@ -39,16 +44,6 @@
                             </v-col>
                         </v-row>
                     </v-col>
-                </v-row>
-                <v-row class="error-message" v-if="error_message">
-                    <v-alert
-                        outlined
-                        dense
-                        color="deep-orange"
-                        icon="mdi-fire"
-                    >
-                        {{ error_message }}
-                    </v-alert>
                 </v-row>
                 <v-row>
                     <v-textarea
