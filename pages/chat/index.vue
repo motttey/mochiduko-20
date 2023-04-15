@@ -30,6 +30,7 @@
                                         <v-avatar 
                                             :class="msg.type"
                                             :color="msg.avatar_color"
+                                            @click="handleInputClick"
                                         >
                                             <v-img
                                                 :src="msg.avatar_src"
@@ -59,6 +60,14 @@
                         @click:append="sendQuestion"
                         @keyup.enter.shift="sendQuestion"
                     ></v-textarea>
+                </v-row>
+                <v-row>
+                    <input 
+                        type="file"
+                        ref="fileUploadButton"
+                        style="display: none;"
+                        @change="onFileChange"
+                    />
                 </v-row>
             </v-container>
         </v-flex>
@@ -190,6 +199,21 @@ export default {
                 this.error_message = e.toString()
             })
         },
+        handleInputClick() {
+            this.$refs.fileUploadButton.click();
+        },
+        onFileChange(event) {
+            if (event.target && event.target.files) {
+                const file = event.target.files[0]
+                const reader = new FileReader()
+
+                reader.onload = (e) => {
+                    this.questioner_properties.avatar_src = e.target.result
+                }
+
+                reader.readAsDataURL(file)
+            }
+        }
     },
     computed: {},
     async created () {
