@@ -159,8 +159,6 @@ export default {
                 )
                 .then((res) => {
                     const response_code = this.getResponseMessage(res)
-                    console.log(response_code)
-
                     if (response_code.includes('ネガ')) 
                         resolve(this.image_properties.DORAEMON_NEGATIVE_AVATAR)
                     else if (response_code.includes('ポジ')) 
@@ -172,11 +170,8 @@ export default {
             });
         },
         async fetchChatResponse(params) {
-            console.log(this.headers)
-
             const random_prefix = Math.random().toString(36).substring(1,10)
             params.messages[0].content = params.messages[0].content + `\n回答の冒頭には「${random_prefix}」という文字列をつけてください。`
-            console.log(params)
             this.$axios.$post(
                 this.openai_api_endpoint,
                 params, 
