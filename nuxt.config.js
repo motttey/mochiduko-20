@@ -126,7 +126,8 @@ export default {
   */
   build: {},
   router: {
-    base: '/mochiduko-20/'
+    base: '/mochiduko-20/',
+    middleware: ['bff']
   },
   env: {
     PIXIV_API_URL: process.env.PIXIV_API_URL,
