@@ -217,7 +217,12 @@ export default {
     computed: {},
     async created () {
         // ドラえもんとしてのロールを付与
-        this.$auth.loginWith('cookie')
+        // トークンをセット
+        await this.$auth.loginWith('cookie')
+            .then(() => {
+                // set token
+                this.$auth.strategy.token.set('token')
+            });
 
         const default_input = 
             'これ以降の対話では、必ず以下のルールに従ってください。\n'

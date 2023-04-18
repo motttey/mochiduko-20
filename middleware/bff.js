@@ -1,10 +1,11 @@
-export default function ({ $axios, store }) {
+export default function ({ $axios, $auth, store }) {
     const MAX_API_ACCESS_PER_USER = 3; // ユーザごとのAPIアクセス回数の上限
     // 10秒待機
     const WAIT_TIME_RETRIES = 10000;
 
     $axios.onRequest(config => {
         console.log('Making request to ', config.url);
+        console.log($auth.strategy.token.get())
         // ユーザごとのAPIアクセス回数をカウントする
         store.commit('incrementUserCount')
         // ユーザのAPIアクセス回数が上限に達した場合はエラーを返す

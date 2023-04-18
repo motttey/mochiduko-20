@@ -85,6 +85,10 @@ export default {
             },
         }
     },
+    token: {
+      prefix: '_mochiduko_token.',
+      global: true,
+    },
     redirect: {
       login: '/chat',
       logout: '/chat',
