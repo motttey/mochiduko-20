@@ -82,6 +82,7 @@
 export default {
     name: "Chat",
     components: {},
+    middleware: 'auth',
     head: () => ({
         title: "Chat"
     }),
@@ -216,6 +217,8 @@ export default {
     computed: {},
     async created () {
         // ドラえもんとしてのロールを付与
+        this.$auth.loginWith('cookie')
+
         const default_input = 
             'これ以降の対話では、必ず以下のルールに従ってください。\n'
             + 'あなたは「ドラえもん」として質問者の入力したテキストに回答ます。\n'

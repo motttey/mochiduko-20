@@ -63,7 +63,9 @@ export default {
   ** Nuxt.js dev-modules
   */
   buildModules: [
-    '@nuxtjs/vuetify'
+    '@nuxtjs/vuetify',
+    '@nuxtjs/axios',
+    '@nuxtjs/auth-next'
   ],
   /*
   ** Nuxt.js modules
@@ -74,9 +76,22 @@ export default {
     '@nuxtjs/proxy',
     '@nuxtjs/google-gtag'
   ],
-  axios: {
-     proxy: true
-   },
+  auth: {
+    strategies: {
+        cookie: {
+            cookie: {
+                // (optional) If set, we check this cookie existence for loggedIn check
+                name: 'XSRF-TOKEN',
+            },
+        }
+    },
+    redirect: {
+      login: '/chat',
+      logout: '/chat',
+      callback: '/chat',
+      home: '/chat'
+    }
+  },
   proxy: {
     '/pixiv':
     {
@@ -133,7 +148,8 @@ export default {
     PIXIV_API_URL: process.env.PIXIV_API_URL,
     LINKS_API_URL: process.env.LINKS_API_URL,
     STORIES_API_URL: process.env.STORIES_API_URL,
-    CHATGPT_TOKEN: process.env.CHATGPT_TOKEN
+    CHATGPT_TOKEN: process.env.CHATGPT_TOKEN,
+    GOOGLE_AUTH_TOKEN: process.env.GOOGLE_AUTH_TOKEN
   },
   fontawesome: {
     imports: [
