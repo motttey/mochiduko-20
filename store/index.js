@@ -2,11 +2,12 @@
 
 export const state = () => ({
     auth: {
-      token: null
+        token: null
     },
     user: {
-      apiAccessCount: 0
-    }
+        userId: null,
+        apiAccessCount: 0
+    },
 })
   
 export const mutations = {
@@ -15,5 +16,11 @@ export const mutations = {
     },
     resetApiAccessCount(state) {
         state.user.apiAccessCount = 0
+    },
+    setUser(state, user) {
+        state.user.userId = user
+    },
+    clearUser(state) {
+        state.user.userId = null
     }
 }

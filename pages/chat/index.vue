@@ -78,7 +78,9 @@
     </v-layout>
 </template>
 
-<script>  
+<script>
+import { v4 as uuidv4 } from 'uuid';
+
 export default {
     name: "Chat",
     components: {},
@@ -221,7 +223,8 @@ export default {
         await this.$auth.loginWith('cookie')
             .then(() => {
                 // set token
-                this.$auth.strategy.token.set('token')
+                const userId = uuidv4();
+                this.$store.commit('setUser', userId)
             });
 
         const default_input = 
