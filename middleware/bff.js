@@ -5,24 +5,30 @@ export default function ({ $axios, $auth, store }) {
     
     $axios.onRequest(config => {
         console.log('Making request to ', config.url);
-        console.log(store.state.user.userId)
 
-        // ユーザごとのAPIアクセス回数をカウントする
-        store.commit('incrementUserCount')
         // ユーザのAPIアクセス回数が上限に達した場合はエラーを返す
-        if (store.state.user.apiAccessCount > MAX_API_ACCESS_PER_USER) {
+        if (
+            store.state.accessCountMap[store.state.user.userId] 
+            > MAX_API_ACCESS_PER_USER
+        ) {
             console.log('アクセス制限を超えました');
 
             setInterval(() => {
-                store.commit('resetApiAccessCount')
+                store.commit('resetApiAccessCount', store.state.user.userId)
+                console.log(store.state.accessCountMap)
             }, WAIT_TIME_RETRIES);
 
             return Promise.reject(new Error('APIへのアクセス制限回数を超えました'));
+        } else {
+            // ユーザごとのAPIアクセス回数をカウントする
+            if (store.state.user.userId) {
+                store.commit('incrementUserCount', store.state.user.userId)
+            }
         }
     });
     
     $axios.onResponse(response => {
-      console.log('Response received from ', response.config.url)
+      // console.log('Response received from ', response.config.url)
     })
   
     $axios.onError(error => {

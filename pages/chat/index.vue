@@ -224,7 +224,10 @@ export default {
             .then(() => {
                 // set token
                 const userId = uuidv4();
-                this.$store.commit('setUser', userId)
+                if (userId) {
+                    this.$store.commit('setUser', userId)
+                    this.$store.commit('resetApiAccessCount', userId)
+                }
             });
 
         const default_input = 

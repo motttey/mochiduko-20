@@ -5,17 +5,27 @@ export const state = () => ({
         token: null
     },
     user: {
-        userId: null,
-        apiAccessCount: 0
+        userId: null
+    },
+    accessCountMap: {
+        // userId: accessCount
     },
 })
-  
+
 export const mutations = {
-    incrementUserCount(state) {
-        state.user.apiAccessCount += 1
+    getState(state) {
+        return state.accessCountMap
     },
-    resetApiAccessCount(state) {
-        state.user.apiAccessCount = 0
+    incrementUserCount(state, user) {
+        state.accessCountMap[user] += 1
+    },
+    resetApiAccessCount(state, user) {
+        state.accessCountMap[user] = 0
+    },
+    resetAllApiAccessCount(state) {
+        Object.keys(state.accessCountMap).forEach((key) => {
+            state.accessCountMap[key] = 0
+        })
     },
     setUser(state, user) {
         state.user.userId = user
