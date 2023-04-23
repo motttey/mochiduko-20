@@ -1,9 +1,9 @@
-export default function ({ $axios, isDev, store }) {
+export default ({ $axios, isDev, store }) => {
     const MAX_API_ACCESS_PER_USER = 3; // ユーザごとのAPIアクセス回数の上限
     // 10秒待機
     const WAIT_TIME_RETRIES = 10000;
     
-    $axios.onRequest(config => {
+    $axios.onRequest((config) => {
         console.log('Making request to ', config.url);
         
         // dev環境の時はそのまま
@@ -13,11 +13,8 @@ export default function ({ $axios, isDev, store }) {
             store.state.accessCountMap[store.state.user.userId] 
             > MAX_API_ACCESS_PER_USER
         ) {
-            console.log('アクセス制限を超えました');
-
             setInterval(() => {
                 store.commit('resetApiAccessCount', store.state.user.userId)
-                console.log(store.state.accessCountMap)
             }, WAIT_TIME_RETRIES);
 
             return Promise.reject(new Error('APIへのアクセス制限回数を超えました'));
@@ -29,11 +26,10 @@ export default function ({ $axios, isDev, store }) {
         }
     });
     
-    $axios.onResponse(response => {
-      // console.log('Response received from ', response.config.url)
+    $axios.onResponse((_) => {
     })
   
-    $axios.onError(error => {
+    $axios.onError((error) => {
       return Promise.reject(error)
     })
 }

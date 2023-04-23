@@ -13,9 +13,6 @@ export const state = () => ({
 })
 
 export const mutations = {
-    getState(state) {
-        return state.accessCountMap
-    },
     incrementUserCount(state, user) {
         state.accessCountMap[user] += 1
     },
