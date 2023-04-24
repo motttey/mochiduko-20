@@ -26,19 +26,22 @@
                         >
                             <v-col class="baloon-columns">
                                 <div :class="[msg.isClient ? 'balloon_r' : 'balloon_l']">
-                                    <div class="face_icon">
+                                    <div 
+                                        class="face_icon"
+                                        title="クリックで画像を切り替えられます"
+                                        style="
+                                            cursor: pointer;
+                                            pointer-events: fill;
+                                        "
+                                    >
                                         <v-avatar 
                                             :class="msg.type"
                                             :color="msg.avatar_color"
                                             @click="handleInputClick"
-                                            style="
-                                                cursor: pointer;
-                                                pointer-events: fill;
-                                            "
                                         >
                                             <v-img
                                                 :src="msg.avatar_src"
-                                                :alt="msg.name"
+                                                :alt="getAltTextOfAvator(msg.name, msg.isClient)"
                                             ></v-img>
                                         </v-avatar>
                                     </div>
@@ -118,6 +121,9 @@ export default {
         error_message: ''
     }),
     methods: {
+        getAltTextOfAvator(name, isClient) {
+            return (isClient) ? name : 'アバター画像' + name + 'クリックで画像を変更できます'
+        },
         getResponseMessage(res) {
             return res?.choices[0]?.message?.content.trim() || '';
         },
