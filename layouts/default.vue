@@ -172,9 +172,13 @@ export default {
         {
           title: 'Stories',
           href: '/stories'
+        },
+        {
+          title: 'Chat',
+          href: '/chat'
         }
       ],
-      miniVariant: false,
+      miniVariant: true,
       right: true,
       rightDrawer: false,
       title: 'モチヅ庫',
