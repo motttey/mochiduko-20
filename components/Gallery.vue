@@ -49,6 +49,8 @@
           <a :href="target_illust.url" target="_blank">
             <v-img
               :src="target_illust.src"
+              :alt="target_illust.title"
+              loading="lazy"
               class="white--text align-end"
               aspect-ratio="1"
             >
