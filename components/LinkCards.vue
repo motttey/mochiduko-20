@@ -10,16 +10,17 @@
             <v-col
               :cols="card.flex"
               v-for="card in cards"
-              :key="card.tditle">
+              :key="card.title">
               <v-hover v-slot="{ hover }">
                 <v-card
                   :class="{ 'on-hover': hover }"
                 >
                   <a :href="card.url" target="_blank">
                     <v-img
-                      :src="card.src"
-                      :elevation="hover ? 12 : 2"
                       class="white--text align-end"
+                      :src="card.src"
+                      :alt="card.title + 'のアイコン'"
+                      :elevation="hover ? 12 : 2"
                       loading="lazy"
                       position='50% 80%'
                       gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.8)"
@@ -49,21 +50,23 @@
     data: () => ({
       cards: [
         { title: 'pixiv', src: process.env.PIXIV_API_URL +  '?illust_id=56266129',
-        url: 'https://www.pixiv.net/users/415546', flex: 6 },
+        url: 'https://www.pixiv.net/users/415546', flex: 12 },
         { title: 'BOOTH', src: process.env.PIXIV_API_URL +  '?illust_id=58885220',
         url: 'https://motitago.booth.pm/', flex: 6 },
+        { title: 'Skeb',  src: process.env.PIXIV_API_URL + '?illust_id=86992637',
+        url: 'https://skeb.jp/@mt_tg', flex: 6 },
         { title: 'deviantART', src: process.env.PIXIV_API_URL +  '?illust_id=49554002',
         url: 'https://www.deviantart.com/motttey', flex: 6 },
         { title: 'weibo',  src: process.env.PIXIV_API_URL + '?illust_id=56608401',
         url: 'https://weibo.com/7310121728', flex: 6 },
-        { title: 'twitter',  src: process.env.PIXIV_API_URL + '?illust_id=79403135',
+        { title: 'twitter',  src: process.env.PIXIV_API_URL + '?illust_id=98419049',
         url: 'https://twitter.com/mt_tg', flex: 12 },
         { title: 'Instagram',  src: process.env.PIXIV_API_URL + '?illust_id=49339965',
         url: 'https://www.instagram.com/tagosaku_mochiduki', flex: 6 },
         { title: 'Blog',  src: process.env.PIXIV_API_URL + '?illust_id=83975466',
-        url: 'http://motttey.hatenablog.com/', flex: 6 },
-        { title: 'Skeb',  src: process.env.PIXIV_API_URL + '?illust_id=86992637',
-        url: 'https://skeb.jp/@mt_tg', flex: 12 },
+        url: 'http://motttey.hatenablog.com/', flex: 6 }
+        // { title: 'Mastodon',  src: process.env.PIXIV_API_URL + '?illust_id=104735581',
+        // url: 'https://pawoo.net/@motttey', flex: 6 },
       ],
     }),
   }
