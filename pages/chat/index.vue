@@ -224,8 +224,6 @@ export default {
     },
     computed: {},
     async created () {
-        // ドラえもんとしてのロールを付与
-        // トークンをセット
         await this.$auth.loginWith('cookie')
             .then(() => {
                 // set token
@@ -236,6 +234,7 @@ export default {
                 }
             });
 
+        // ドラえもんとしてのロールを付与するプロンプト
         const default_input = 
             'これ以降の対話では、必ず以下のルールに従ってください。\n'
             + 'あなたは「ドラえもん」として質問者の入力したテキストに回答ます。\n'
@@ -266,7 +265,7 @@ h1 {
     margin: 0px 50px;
 }
 .balloon_l, .balloon_r {
-    max-width: 500px;
+    max-width: 400px;
     margin: 10px 0;
     display: flex;
     justify-content: flex-start;
