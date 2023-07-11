@@ -93,28 +93,28 @@ export default {
       home: '/chat'
     }
   },
-  proxy: {
-    '/pixiv':
+  proxy: [
+    ['/pixiv',
     {
       target: 'http://embed.pixiv.net/decorate.php',
       pathRewrite: {'^/pixiv': ''}
-    },
-    '/links':
+    }],
+    ['/links',
     {
       target: process.env.LINKS_API_URL,
       pathRewrite: {'^/links': ''}
-    },
-    '/stories':
+    }],
+    ['/stories',
     {
       target: process.env.STORIES_API_URL,
       pathRewrite: {'^/stories': ''}
-    },
-    '/motttey':
+    }],
+    ['/motttey',
     {
       target: 'https://motttey.github.io/gallery/',
       pathRewrite: {'^/motttey': ''}
-    }
-  },
+    }]
+  ],
   /*
   ** vuetify module configuration
   ** https://github.com/nuxt-community/vuetify-module
