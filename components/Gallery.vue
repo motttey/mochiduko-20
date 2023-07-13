@@ -264,48 +264,49 @@
         let coordinate_bounds = {}
         let axes = this.axes;
         const api_url = this.api_url;
+
         await this.$axios.$get(api_url + 'each_illusts.json')
           .then(data => {
-          this.target_images = data.slice(0, this.canvas_settings.image_max);
+            this.target_images = data.slice(0, this.canvas_settings.image_max);
 
-          axes.forEach((axis, i) => {
-            coordinate_bounds[axis] = [
-              Math.max.apply(Math, this.target_images.map(function(o) { return o[axis]; })),
-              Math.min.apply(Math, this.target_images.map(function(o) { return o[axis]; }))
-            ];
-          });
-
-          this.target_images.forEach(function (d) {
-            const loader = new THREE.TextureLoader();
-            loader.setCrossOrigin('anonymous');
-            loader.load(api_url + 'thumbs/' + d['id'] + '.webp', function(texture){
-              let mat = new THREE.PointsMaterial({
-                color:0xFFFFFF,
-                size: 20,
-                transparent: true,
-                map: texture,
-              });
-
-              let scales = axes.map((axis) => {
-                return scaleSqrt()
-                  .domain(coordinate_bounds[axis])
-                  .range([-box_size, box_size]);
-              });
-
-              const points = [];
-              let x = scales[0](d['tsne-X']);
-              let y = scales[1](d['tsne-Y']);
-              let z = scales[2](d['tsne-Z']);
-              points.push(v(x,y,z))
-
-              let pointGeo = new THREE.BufferGeometry().setFromPoints(points);
-              let pointsObj = new THREE.Points(pointGeo, mat);
-              pointGeo.name = d['id'].toString()
-              pointsObj.name = d['id'].toString()
-
-              scatterPlot.add(pointsObj);
+            axes.forEach((axis, i) => {
+              coordinate_bounds[axis] = [
+                Math.max.apply(Math, this.target_images.map(function(o) { return o[axis]; })),
+                Math.min.apply(Math, this.target_images.map(function(o) { return o[axis]; }))
+              ];
             });
-          });
+
+            this.target_images.forEach(function (d) {
+              const loader = new THREE.TextureLoader();
+              loader.setCrossOrigin('anonymous');
+              loader.load(api_url + 'thumbs/' + d['id'] + '.webp', function(texture){
+                let mat = new THREE.PointsMaterial({
+                  color:0xFFFFFF,
+                  size: 20,
+                  transparent: true,
+                  map: texture,
+                });
+
+                let scales = axes.map((axis) => {
+                  return scaleSqrt()
+                    .domain(coordinate_bounds[axis])
+                    .range([-box_size, box_size]);
+                });
+
+                const points = [];
+                let x = scales[0](d['tsne-X']);
+                let y = scales[1](d['tsne-Y']);
+                let z = scales[2](d['tsne-Z']);
+                points.push(v(x,y,z))
+
+                let pointGeo = new THREE.BufferGeometry().setFromPoints(points);
+                let pointsObj = new THREE.Points(pointGeo, mat);
+                pointGeo.name = d['id'].toString()
+                pointsObj.name = d['id'].toString()
+
+                scatterPlot.add(pointsObj);
+              });
+            });
         }).catch(error => {
           console.log('response error', error)
         });
