@@ -11,15 +11,13 @@
     >
       <v-container fluid>
         <v-row>
-          <h1>AIが描いたドラえもん</h1>
-        </v-row>
-        <v-row>
           <v-col cols="12" sm="6" offset-sm="3">
             <v-card flat>
+              <h1>AIが描いたドラえもん</h1>
               <v-img
                 v-if="images.length > 0"
-                :src="getRandomImg(images).url"
-                :lazy-src="getRandomImg(images).url"
+                :src="api_url + getRandomImg(images).image"
+                :lazy-src="api_url + getRandomImg(images).image"
                 alt="generated doraemon"
                 aspect-ratio="auto"
                 max-height="600px"
