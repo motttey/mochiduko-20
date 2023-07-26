@@ -162,10 +162,6 @@ export default {
       ],
       linkItems: [
         {
-          title: 'C101',
-          href: '/C101'
-        },
-        {
           title: 'Links (external)',
           href: '/link'
         },
@@ -176,6 +172,10 @@ export default {
         {
           title: 'Chat',
           href: '/chat'
+        },
+        {
+          title: 'AI generated',
+          href: '/generated'
         }
       ],
       miniVariant: true,
