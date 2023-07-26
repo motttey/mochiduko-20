@@ -26,7 +26,8 @@
     "nuxt-fontawesome": "^0.4.0",
     "three": "^0.143.0",
     "uuid": "^9.0.0",
-    "vue": "^2.7.10"
+    "vue": "^2.7.10",
+    "vue-scrollto": "^2.20.0"
   },
   "devDependencies": {
     "@nuxtjs/google-analytics": "^2.4.0",
