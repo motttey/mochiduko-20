@@ -18,6 +18,9 @@
                         {{ error_message }}
                     </v-alert>
                 </v-row>
+                <v-row class="model-toggle">
+                    <v-switch v-model="isGPT4" label="GPT-4" inset></v-switch>
+                </v-row>
                 <v-row class="chat-container">
                     <v-col class="chat-column">
                         <v-row 
@@ -89,7 +92,7 @@ export default {
     components: {},
     middleware: 'auth',
     head: () => ({
-        title: "Chat"
+        title: "しつもん! ドラえもん"
     }),
     data: () => ({
         image_properties: {
@@ -112,13 +115,16 @@ export default {
             "avatar_src":  "/mochiduko-20/doraemon-namecard.webp",
             "isClient": false
         },
-        openai_api_endpoint: "https://api.openai.com/v1/chat/completions",       
+        openai_api_endpoint: "https://api.openai.com/v1/chat/completions",      
         messages: [],
         headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + process.env.CHATGPT_TOKEN
         },
-        error_message: ''
+        error_message: '',
+        isGPT4: false,
+        GPT3_model: "gpt-3.5-turbo",
+        GPT4_model: "gpt-4"       
     }),
     methods: {
         getAltTextOfAvator(name, isClient) {
@@ -128,10 +134,6 @@ export default {
             return res?.choices[0]?.message?.content.trim() || '';
         },
         getMessageObject(message, isClient) {
-            console.log({
-                ...(isClient) ? this.questioner_properties : this.doraemon_properties,
-                message: message
-            })
             return {
                 ...(isClient) ? this.questioner_properties : this.doraemon_properties,
                 message: message
@@ -147,7 +149,7 @@ export default {
         },
         getParams(input, role) {
             return {
-                "model": "gpt-3.5-turbo",
+                "model": (this.isGPT4) ? this.GPT4_model: this.GPT3_model,
                 "messages": [
                     {
                         "role": role,
