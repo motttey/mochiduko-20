@@ -59,14 +59,16 @@
         url: 'https://www.deviantart.com/motttey', flex: 6 },
         { title: 'weibo',  src: process.env.PIXIV_API_URL + '?illust_id=56608401',
         url: 'https://weibo.com/7310121728', flex: 6 },
-        { title: 'twitter',  src: process.env.PIXIV_API_URL + '?illust_id=98419049',
+        { title: 'X (Twitter)',  src: process.env.PIXIV_API_URL + '?illust_id=98419049',
         url: 'https://twitter.com/mt_tg', flex: 12 },
         { title: 'Instagram',  src: process.env.PIXIV_API_URL + '?illust_id=49339965',
         url: 'https://www.instagram.com/tagosaku_mochiduki', flex: 6 },
         { title: 'Blog',  src: process.env.PIXIV_API_URL + '?illust_id=83975466',
-        url: 'http://motttey.hatenablog.com/', flex: 6 }
-        // { title: 'Mastodon',  src: process.env.PIXIV_API_URL + '?illust_id=104735581',
-        // url: 'https://pawoo.net/@motttey', flex: 6 },
+        url: 'http://motttey.hatenablog.com/', flex: 6 },
+        { title: 'Threads',  src: process.env.PIXIV_API_URL + '?illust_id=110011678',
+        url: 'https://www.threads.net/@tagosaku_mochiduki', flex: 6 },
+        { title: 'Misskey.io',  src: process.env.PIXIV_API_URL + '?illust_id=98440437',
+        url: 'https://misskey.io/@mt_tg', flex: 6 }        
       ],
     }),
   }
