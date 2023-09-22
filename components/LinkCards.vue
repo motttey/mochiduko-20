@@ -1,7 +1,7 @@
 <template>
   <v-container fluid id="LinkCards">
     <h1>Links</h1>
-    <h3>各種SNSのアカウントです。</h3>
+    <h3>望月田吾作の各種SNSのアカウントです。</h3>
 
     <v-row dense class="mb-6">
       <v-col cols="12" sm="8" offset-sm="2">
@@ -9,8 +9,9 @@
           <v-row>
             <v-col
               :cols="card.flex"
+              :key="card.title"
               v-for="card in cards"
-              :key="card.title">
+            >
               <v-hover v-slot="{ hover }">
                 <v-card
                   :class="{ 'on-hover': hover }"
