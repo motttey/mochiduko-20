@@ -48,26 +48,27 @@
 <script setup>
 import { ref } from 'vue';
 
+const config = useRuntimeConfig();
 const cards = ref([
-  { title: 'pixiv', src: process.env.PIXIV_API_URL +  '?illust_id=56266129',
+  { title: 'pixiv', src: config.public.pixivApiUrl +  '?illust_id=56266129',
   url: 'https://www.pixiv.net/users/415546', flex: 12 },
-  { title: 'BOOTH', src: process.env.PIXIV_API_URL +  '?illust_id=58885220',
+  { title: 'BOOTH', src: config.public.pixivApiUrl +  '?illust_id=58885220',
   url: 'https://motitago.booth.pm/', flex: 6 },
-  { title: 'Skeb',  src: process.env.PIXIV_API_URL + '?illust_id=86992637',
+  { title: 'Skeb',  src: config.public.pixivApiUrl + '?illust_id=86992637',
   url: 'https://skeb.jp/@mt_tg', flex: 6 },
-  { title: 'deviantART', src: process.env.PIXIV_API_URL +  '?illust_id=49554002',
+  { title: 'deviantART', src: config.public.pixivApiUrl +  '?illust_id=49554002',
   url: 'https://www.deviantart.com/motttey', flex: 6 },
-  { title: 'weibo',  src: process.env.PIXIV_API_URL + '?illust_id=56608401',
+  { title: 'weibo',  src: config.public.pixivApiUrl + '?illust_id=56608401',
   url: 'https://weibo.com/7310121728', flex: 6 },
-  { title: 'X (Twitter)',  src: process.env.PIXIV_API_URL + '?illust_id=98419049',
+  { title: 'X (Twitter)',  src: config.public.pixivApiUrl + '?illust_id=98419049',
   url: 'https://twitter.com/mt_tg', flex: 12 },
-  { title: 'Instagram',  src: process.env.PIXIV_API_URL + '?illust_id=49339965',
+  { title: 'Instagram',  src: config.public.pixivApiUrl + '?illust_id=49339965',
   url: 'https://www.instagram.com/tagosaku_mochiduki', flex: 6 },
-  { title: 'Blog',  src: process.env.PIXIV_API_URL + '?illust_id=83975466',
+  { title: 'Blog',  src: config.public.pixivApiUrl + '?illust_id=83975466',
   url: 'http://motttey.hatenablog.com/', flex: 6 },
-  { title: 'Threads',  src: process.env.PIXIV_API_URL + '?illust_id=110011678',
+  { title: 'Threads',  src: config.public.pixivApiUrl + '?illust_id=110011678',
   url: 'https://www.threads.net/@tagosaku_mochiduki', flex: 6 },
-  { title: 'Misskey.io',  src: process.env.PIXIV_API_URL + '?illust_id=98440437',
+  { title: 'Misskey.io',  src: config.public.pixivApiUrl + '?illust_id=98440437',
   url: 'https://misskey.io/@mt_tg', flex: 6 }
 ]);
 </script>

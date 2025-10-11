@@ -34,13 +34,9 @@
 
     </v-app-bar>
 
-    <v-main class="bg">
-    </v-main>
-
-    <v-main class="bg-img">
-    </v-main>
-
     <v-main>
+      <div class="bg" />
+      <div class="bg-img" />
       <v-container>
         <slot />
       </v-container>
@@ -58,22 +54,18 @@
         <v-list-item
           v-for="(item, i) in items"
           :key="'to' + i.toString()"
+          :href="item.to"
           link
         >
-          <v-list-item-content v-scroll-to="item.to">
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
+          <v-list-item-title>{{ item.title }}</v-list-item-title>
         </v-list-item>
         <v-list-item
           v-for="(item, i) in linkItems"
           :key="'href' + i.toString()"
+          :href="item.href"
           link
         >
-          <v-list-item-content>
-            <a :href="item.href" style="color:azure">
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
-            </a>
-          </v-list-item-content>
+          <v-list-item-title>{{ item.title }}</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -104,6 +96,7 @@
     background-position: 100% 100%;
     background-size: 250px auto;
     background-image: url("/site-bg.webp");
+    background-repeat: no-repeat;
     filter: blur(1.5px);
     background-color: rgba(0, 0, 0, 0.5);
     background-blend-mode: darken;

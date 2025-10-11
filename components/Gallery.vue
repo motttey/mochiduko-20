@@ -227,58 +227,59 @@ function removeTag(index) {
   filterImage();
 }
 
-async function drawScatter() {
+const { data: illustsData, error } = await useFetch(api_url + 'each_illusts.json');
+
+if (error.value) {
+  console.error('response error', error.value);
+}
+
+function drawScatter() {
+  if (!illustsData.value) return;
+
   let scatterPlot = new THREE.Object3D();
   const box_size = canvas_settings.box_size;
   scene.add(scatterPlot);
 
   let coordinate_bounds = {};
-  const { $axios } = useNuxtApp();
+  target_images.value = illustsData.value.slice(0, canvas_settings.image_max);
 
-  try {
-    const data = await $axios.$get(api_url + 'each_illusts.json');
-    target_images.value = data.slice(0, canvas_settings.image_max);
+  axes.forEach((axis) => {
+    coordinate_bounds[axis] = [
+      Math.max(...target_images.value.map(o => o[axis])),
+      Math.min(...target_images.value.map(o => o[axis]))
+    ];
+  });
 
-    axes.forEach((axis) => {
-      coordinate_bounds[axis] = [
-        Math.max(...target_images.value.map(o => o[axis])),
-        Math.min(...target_images.value.map(o => o[axis]))
-      ];
-    });
-
-    target_images.value.forEach(d => {
-      const loader = new THREE.TextureLoader();
-      loader.setCrossOrigin('anonymous');
-      loader.load(api_url + 'thumbs/' + d['id'] + '.webp', (texture) => {
-        let mat = new THREE.PointsMaterial({
-          color: 0xFFFFFF,
-          size: 20,
-          transparent: true,
-          map: texture,
-        });
-
-        let scales = axes.map((axis) => {
-          return scaleSqrt().domain(coordinate_bounds[axis]).range([-box_size, box_size]);
-        });
-
-        const points = [];
-        let x = scales[0](d['tsne-X']);
-        let y = scales[1](d['tsne-Y']);
-        let z = scales[2](d['tsne-Z']);
-        points.push(v(x, y, z));
-
-        let pointGeo = new THREE.BufferGeometry().setFromPoints(points);
-        let pointsObj = new THREE.Points(pointGeo, mat);
-        pointsObj.name = d['id'].toString();
-        scatterPlot.add(pointsObj);
+  target_images.value.forEach(d => {
+    const loader = new THREE.TextureLoader();
+    loader.setCrossOrigin('anonymous');
+    loader.load(api_url + 'thumbs/' + d['id'] + '.webp', (texture) => {
+      let mat = new THREE.PointsMaterial({
+        color: 0xFFFFFF,
+        size: 20,
+        transparent: true,
+        map: texture,
       });
-    });
 
-    if (target_images.value.length > 0) {
-      setTargetImageProperties(target_images.value[0]);
-    }
-  } catch (error) {
-    console.log('response error', error);
+      let scales = axes.map((axis) => {
+        return scaleSqrt().domain(coordinate_bounds[axis]).range([-box_size, box_size]);
+      });
+
+      const points = [];
+      let x = scales[0](d['tsne-X']);
+      let y = scales[1](d['tsne-Y']);
+      let z = scales[2](d['tsne-Z']);
+      points.push(v(x, y, z));
+
+      let pointGeo = new THREE.BufferGeometry().setFromPoints(points);
+      let pointsObj = new THREE.Points(pointGeo, mat);
+      pointsObj.name = d['id'].toString();
+      scatterPlot.add(pointsObj);
+    });
+  });
+
+  if (target_images.value.length > 0) {
+    setTargetImageProperties(target_images.value[0]);
   }
 
   renderer.setSize(canvas_settings.canvas_width, canvas_settings.canvas_height);

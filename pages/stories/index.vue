@@ -1,13 +1,11 @@
 <template>
-  <v-layout
-    column
-    justify-center
-    align-center
+  <v-row
+    justify="center"
   >
-    <v-flex
-      xs12
-      sm9
-      md9
+    <v-col
+      cols="12"
+      sm="9"
+      md="9"
     >
       <v-container fluid>
         <v-row>
@@ -25,37 +23,21 @@
           </v-col>
         </v-row>
       </v-container>
-    </v-flex>
-  </v-layout>
+    </v-col>
+  </v-row>
 </template>
 
-<script>
+<script setup>
 import StoryTable from '~/components/StoryTable.vue'
 
-export default {
-  name: "Stories",
-  components: {
-    StoryTable
-  },
-  head: () => ({
-    title: " Stories"
-  }),
-  data: () => ({
-    stories: []
-  }),
-  methods: {
-    async getStories() {
-      this.$axios.$get(process.env.STORIES_API_URL)
-        .then((res) => {
-          this.stories = res
-        })
-        .catch((error) => {
-          console.log(error)
-        });
-    }
-  },
-  created () {
-    this.getStories()
-  }
+useHead({
+  title: "Stories"
+})
+
+const config = useRuntimeConfig()
+const { data: stories, error } = await useFetch(config.public.storiesApiUrl)
+
+if (error.value) {
+  console.error('Failed to fetch stories:', error.value)
 }
 </script>

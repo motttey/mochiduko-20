@@ -1,45 +1,34 @@
 <template>
-  <v-layout
-    column
-    justify-center
-    align-center
+  <v-row
+    justify="center"
   >
-    <v-flex
-      xs12
-      sm6
-      md6
+    <v-col
+      cols="12"
+      sm="12"
+      md="12"
     >
       <name-card />
-      <v-divider></v-divider>
+      <v-divider class="my-4" />
+      <!--
       <time-line />
-      <v-divider></v-divider>
+      <v-divider class="my-4" />
+      -->
       <gallery />
-      <v-divider></v-divider>
+      <v-divider class="my-4" />
       <works />
-      <v-divider></v-divider>
+      <v-divider class="my-4" />
       <link-cards />
-      <v-divider></v-divider>
+      <v-divider class="my-4" />
       <contact-info />
-    </v-flex>
-  </v-layout>
+    </v-col>
+  </v-row>
 </template>
 
-<script>
+<script setup>
 import NameCard from '~/components/NameCard.vue'
-import TimeLine from '~/components/TimeLine.vue'
+// import TimeLine from '~/components/TimeLine.vue'
 import Gallery from '~/components/Gallery.vue'
 import Works from '~/components/Works.vue'
 import LinkCards from '~/components/LinkCards.vue'
 import ContactInfo from '~/components/ContactInfo.vue'
-
-export default {
-  components: {
-    NameCard,
-    TimeLine,
-    LinkCards,
-    Gallery,
-    Works,
-    ContactInfo
-  }
-}
 </script>

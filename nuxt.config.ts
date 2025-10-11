@@ -1,15 +1,11 @@
-import { defineNuxtConfig } from 'nuxt/config'
 import vuetify from 'vite-plugin-vuetify'
 
+// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  // Nuxt rendering mode
   ssr: false,
-
   build: {
-    transpile: ['vuetify'],
+    transpile: ['vuetify', '@fortawesome/vue-fontawesome'],
   },
-
-  // App configuration
   app: {
     baseURL: '/mochiduko-20/',
     head: {
@@ -38,16 +34,24 @@ export default defineNuxtConfig({
       ]
     }
   },
-
-  // Global CSS
-  css: [],
-
-  // Nuxt.js modules
+  css: [
+    'vuetify/lib/styles/main.sass',
+    '@mdi/font/css/materialdesignicons.min.css',
+    '@fortawesome/fontawesome-svg-core/styles.css',
+  ],
   modules: [
     '@pinia/nuxt',
   ],
-
-  // Runtime config
+  hooks: {
+    'vite:extendConfig': (config) => {
+      config.plugins = config.plugins || []
+      config.plugins.push(
+        vuetify({
+          autoImport: true,
+        })
+      )
+    }
+  },
   runtimeConfig: {
     public: {
       pixivApiUrl: process.env.PIXIV_API_URL,
@@ -58,16 +62,12 @@ export default defineNuxtConfig({
       gtagId: process.env.GOOGLE_ANALYTICS_ID
     }
   },
-
-  // Route rules for proxy
   routeRules: {
     '/pixiv/**': { proxy: 'http://embed.pixiv.net/decorate.php/**' },
     '/links/**': { proxy: `${process.env.LINKS_API_URL}/**` },
     '/stories/**': { proxy: `${process.env.STORIES_API_URL}/**` },
     '/motttey/**': { proxy: 'https://motttey.github.io/gallery/**' },
   },
-
-  // Vite configuration for SCSS variables
   vite: {
     css: {
       preprocessorOptions: {
@@ -77,12 +77,6 @@ export default defineNuxtConfig({
       }
     }
   },
-
-  hooks: {
-    'vite:extendConfig': (config) => {
-      config.plugins?.push(vuetify())
-    },
-  },
-
   compatibilityDate: '2024-04-03',
+  devtools: { enabled: true }
 })
