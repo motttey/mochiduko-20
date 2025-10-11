@@ -1,16 +1,12 @@
-import { shallowMount } from '@vue/test-utils'
-import NameCard from '@/components/NameCard.vue'
-import Vue from "vue";
-import Vuetify from "vuetify";
+import { shallowMount } from '@vue/test-utils';
+import NameCard from '@/components/NameCard.vue';
 
 describe('NameCard', () => {
-  test('is a Vue instance', () => {
-    Vue.config.productionTip = false;
-    Vue.use(Vuetify);
-
+  it('renders', () => {
     const wrapper = shallowMount(NameCard, {
-      stubs: ['font-awesome-icon']
+      // setup.js で Vuetify を global に入れているので指定不要
+      // global: { plugins: [createVuetify()] }
     });
-    expect(wrapper.vm).toBeTruthy();
-  })
-})
+    expect(wrapper.exists()).toBe(true);
+  });
+});
