@@ -71,262 +71,222 @@
   </v-container>
 </template>
 
-<script>
-  import * as THREE from 'three/build/three.module.js';
-  import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-  import { scaleSqrt } from 'd3-scale';
+<script setup>
+import { ref, onMounted, watch } from 'vue';
+import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { scaleSqrt } from 'd3-scale';
 
-  export default {
-    data: () => ({
-      tagName: '',
-      tags: [],
-      target_illust: {
-        title: 'dora1',
-        date: '20200718',
-        tags_text: '#doraemon',
-        src: '/mochiduko-20/doraemon-namecard.webp',
-        url: 'https://www.pixiv.net/users/415546', flex: 12
-      },
-      canvas_settings: {
-        canvas_width: 1200,
-        canvas_height: 650,
-        canvas_offset_x: 0,
-        canvas_offset_y: -50,
-        box_size: 40,
-        image_max: 200,
-      },
-      api_url: 'https://mochiduko-api.netlify.app/',
-      pixiv_embed: 'http://embed.pixiv.net/decorate.php',
-      pixiv_artwork: 'https://www.pixiv.net/artworks/',
-      axes: ['tsne-X', 'tsne-Y', 'tsne-Z'],
-      mousePosition: [],
-      target_images: [],
-      renderer: new Object(),
-      canvas: new Object(),
-      scene: new THREE.Scene(),
-      camera: new Object(),
-      controls: new Object(),
-      MOUNTED: false,
-      INTERSECTED: false,
-    }),
-    watch: {
-      mousePosition: function (val) {
-        if (val) this.selectImage(val);
-      }
-    },
-    mounted: function() {
-      this.renderer = new THREE.WebGLRenderer({ alpha: true });
-      this.canvas = this.$refs.canvas_holder;
-      this.canvas_settings.canvas_width = this.canvas.clientWidth;
+const tagName = ref('');
+const tags = ref([]);
+const target_illust = ref({
+  title: 'dora1',
+  date: '20200718',
+  tags_text: '#doraemon',
+  src: '/doraemon-namecard.webp',
+  url: 'https://www.pixiv.net/users/415546', flex: 12
+});
+const canvas_settings = {
+  canvas_width: 1200,
+  canvas_height: 650,
+  canvas_offset_x: 0,
+  canvas_offset_y: -50,
+  box_size: 40,
+  image_max: 200,
+};
+const api_url = 'https://mochiduko-api.netlify.app/';
+const pixiv_embed = 'http://embed.pixiv.net/decorate.php';
+const pixiv_artwork = 'https://www.pixiv.net/artworks/';
+const axes = ['tsne-X', 'tsne-Y', 'tsne-Z'];
+const mousePosition = ref([]);
+const target_images = ref([]);
+let renderer, canvas, scene, camera, controls;
+let MOUNTED = false;
+const canvas_holder = ref(null);
 
-      this.canvas.appendChild(this.renderer.domElement);
-      this.renderer.setSize(this.canvas_settings.canvas_width, this.canvas_settings.canvas_height);
+watch(mousePosition, (val) => {
+  if (val) selectImage(val);
+});
 
-      //カメラを作成
-      this.camera = new THREE.PerspectiveCamera(45, this.canvas_settings.canvas_width / this.canvas_settings.canvas_height, 0.5, 1000);
+onMounted(() => {
+  renderer = new THREE.WebGLRenderer({ alpha: true });
+  canvas = canvas_holder.value;
+  canvas_settings.canvas_width = canvas.clientWidth;
 
-      this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-      this.controls.enableDamping = true;
-      this.controls.autoRotate = true;
-      this.controls.autoRotateSpeed = 1;
-      this.controls.dampingFactor = 0.25;
-      this.controls.enableZoom = true;
+  canvas.appendChild(renderer.domElement);
+  renderer.setSize(canvas_settings.canvas_width, canvas_settings.canvas_height);
 
-      this.renderer.setSize(this.canvas_settings.canvas_width, this.canvas_settings.canvas_height);
+  scene = new THREE.Scene();
+  camera = new THREE.PerspectiveCamera(45, canvas_settings.canvas_width / canvas_settings.canvas_height, 0.5, 1000);
 
-      this.renderer.setClearColor(0x000000, 0.0);
-      this.renderer.clear();
+  controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.autoRotate = true;
+  controls.autoRotateSpeed = 1;
+  controls.dampingFactor = 0.25;
+  controls.enableZoom = true;
 
-      this.drawScatter();
-      this.renderScene();
+  renderer.setSize(canvas_settings.canvas_width, canvas_settings.canvas_height);
+  renderer.setClearColor(0x000000, 0.0);
+  renderer.clear();
 
-      this.MOUNTED = true;
-    },
-    methods: {
-      v(x,y,z){ return new THREE.Vector3(x,y,z); },
-      renderScene(){
-        requestAnimationFrame(this.renderScene);
-        this.controls.update();
-        this.renderer.render(this.scene, this.camera);
-      },
-      setTargetImageProperties(target_image){
-        this.target_illust.src = this.pixiv_embed + '?illust_id=' + target_image['id'] + '&mode=sns-automator';
+  drawScatter();
+  renderScene();
 
-        this.target_illust.title = target_image['title'];
-        this.target_illust.date = target_image['date'];
-        this.target_illust.tags_text = target_image['tags']
-          .map((tag) => '#' + tag['name']).join(' ');
+  MOUNTED = true;
+});
 
-        this.target_illust.url  = this.pixiv_artwork + target_image['id'];
-      },
-      calcMousePositionInCanvas(event) {
-        let pos_x = event.clientX + document.body.scrollLeft + document.documentElement.scrollLeft - Math.floor(this.canvas.offsetLeft);
-        let pos_y = event.clientY + document.body.scrollTop + document.documentElement.scrollTop - Math.floor(this.canvas.offsetTop);
+function v(x, y, z) {
+  return new THREE.Vector3(x, y, z);
+}
 
-        pos_x = ((pos_x + this.canvas_settings.canvas_offset_x) /  this.canvas_settings.canvas_width) * 2 - 1;
-        pos_y = - ((pos_y + this.canvas_settings.canvas_offset_y) / this.canvas_settings.canvas_height) * 2 + 1;
+function renderScene() {
+  requestAnimationFrame(renderScene);
+  controls.update();
+  renderer.render(scene, camera);
+}
 
-        return [pos_x, pos_y];
-      },
-      onDocumentMouseMove(e) {
-        this.mousePosition = this.calcMousePositionInCanvas(e);
-      },
-      onTouch(e) {
-        if (e.touches && e.touches.length > 0) {
-          this.mousePosition = this.calcMousePositionInCanvas(e.touches[0]);
-        } else if (e.changedTouches && e.changedTouches.length > 0) {
-          this.mousePosition = this.calcMousePositionInCanvas(e.changedTouches[0]);
-        }
-      },
-      async selectImage(mousePos) {
-        let raycaster = new THREE.Raycaster();
+function setTargetImageProperties(target_image) {
+  target_illust.value.src = pixiv_embed + '?illust_id=' + target_image['id'] + '&mode=sns-automator';
+  target_illust.value.title = target_image['title'];
+  target_illust.value.date = target_image['date'];
+  target_illust.value.tags_text = target_image['tags'].map((tag) => '#' + tag['name']).join(' ');
+  target_illust.value.url = pixiv_artwork + target_image['id'];
+}
 
-        let mouse =  new THREE.Vector2(mousePos[0], mousePos[1]);
-        raycaster.setFromCamera(mouse, this.camera);
+function calcMousePositionInCanvas(event) {
+  let pos_x = event.clientX + document.body.scrollLeft + document.documentElement.scrollLeft - Math.floor(canvas.offsetLeft);
+  let pos_y = event.clientY + document.body.scrollTop + document.documentElement.scrollTop - Math.floor(canvas.offsetTop);
+  pos_x = ((pos_x + canvas_settings.canvas_offset_x) / canvas_settings.canvas_width) * 2 - 1;
+  pos_y = -((pos_y + canvas_settings.canvas_offset_y) / canvas_settings.canvas_height) * 2 + 1;
+  return [pos_x, pos_y];
+}
 
-        let children = this.scene.children[0].children;
-        let intersects = raycaster
-          .intersectObjects(children.slice(0, children.length-1), true)
-          .filter(o => o.object.name &&  o.object.visible);
+function onDocumentMouseMove(e) {
+  mousePosition.value = calcMousePositionInCanvas(e);
+}
 
-        if (intersects.length > 0){
-          // console.log('name is:' + intersects[0].object.name);
-          let target_image = this.target_images
-            .filter(img => img['id'] == intersects[0].object.name);
+function onTouch(e) {
+  if (e.touches && e.touches.length > 0) {
+    mousePosition.value = calcMousePositionInCanvas(e.touches[0]);
+  } else if (e.changedTouches && e.changedTouches.length > 0) {
+    mousePosition.value = calcMousePositionInCanvas(e.changedTouches[0]);
+  }
+}
 
-          if (target_image.length === 0) return
-          await this.setTargetImageProperties(target_image[0]);
-        }
-      },
-      onResize() {
-        if (!this.MOUNTED) return;
-        // 高さは一定
-        const width = this.canvas.clientWidth;
-        const height = this.canvas_settings.canvas_height;
-        this.renderer.setSize(this.canvas.clientWidth, this.canvas_settings.canvas_height);
+async function selectImage(mousePos) {
+  let raycaster = new THREE.Raycaster();
+  let mouse = new THREE.Vector2(mousePos[0], mousePos[1]);
+  raycaster.setFromCamera(mouse, camera);
 
-        // カメラのアスペクト比を正す
-        this.camera.aspect = width / height;
-        this.camera.updateProjectionMatrix();
-      },
-      filterImage(){
-        let children = this.scene.children[0].children;
-        if (this.tags.length === 0) {
-          children.forEach((child) => child.visible = true);
-          return;
-        };
-        const filtered_image_indices = this.target_images
-          .filter((image) => image.tags
-            .some((tag) => this.tags.includes(tag.name))
-          )
-          .map((image) => image.id.toString());
+  let children = scene.children[0].children;
+  let intersects = raycaster.intersectObjects(children.slice(0, children.length - 1), true).filter(o => o.object.name && o.object.visible);
 
-        children.forEach((child) => {
-          child.visible = (filtered_image_indices.includes(child.name)) ? true: false;
-        });
-      },
-      addNewTag() {
-        if (!this.tags.includes(this.tagName)) {
-          this.tags.push(this.tagName);
-          this.tagName = '';
-          this.filterImage();
-        }
-      },
-      removeTag(index) {
-        this.tags.splice(index, 1);
-        this.filterImage();
-      },
-      async drawScatter() {
-        let scatterPlot = new THREE.Object3D();
-        const box_size = this.canvas_settings.box_size;
-        const v = this.v;
-        this.scene.add(scatterPlot);
-
-        // Draw the bounding box
-        // let lineGeo = new THREE.Geometry();
-        /*
-        lineGeo.vertices.push(
-          v(-box_size, box_size, -box_size), v(box_size, box_size, -box_size),
-          v(-box_size, -box_size, -box_size), v(box_size, -box_size, -box_size),
-          v(-box_size, box_size, box_size), v(box_size, box_size, box_size),
-          v(-box_size, -box_size, box_size), v(box_size, -box_size, box_size),
-          v(box_size, -box_size, -box_size), v(box_size, box_size, -box_size),
-          v(-box_size, -box_size, -box_size), v(-box_size, box_size, -box_size),
-          v(box_size, -box_size, box_size), v(box_size, box_size, box_size),
-          v(-box_size, -box_size, box_size), v(-box_size, box_size, box_size),
-          v(box_size, box_size, -box_size), v(box_size, box_size, box_size),
-          v(box_size, -box_size, -box_size), v(box_size, -box_size, box_size),
-          v(-box_size, box_size, -box_size), v(-box_size, box_size, box_size),
-          v(-box_size, -box_size, -box_size), v(-box_size, -box_size, box_size)
-        );
-        */
-
-        let coordinate_bounds = {}
-        let axes = this.axes;
-        const api_url = this.api_url;
-
-        await this.$axios.$get(api_url + 'each_illusts.json')
-          .then(data => {
-            this.target_images = data.slice(0, this.canvas_settings.image_max);
-
-            axes.forEach((axis, i) => {
-              coordinate_bounds[axis] = [
-                Math.max.apply(Math, this.target_images.map(function(o) { return o[axis]; })),
-                Math.min.apply(Math, this.target_images.map(function(o) { return o[axis]; }))
-              ];
-            });
-
-            this.target_images.forEach(function (d) {
-              const loader = new THREE.TextureLoader();
-              loader.setCrossOrigin('anonymous');
-              loader.load(api_url + 'thumbs/' + d['id'] + '.webp', function(texture){
-                let mat = new THREE.PointsMaterial({
-                  color:0xFFFFFF,
-                  size: 20,
-                  transparent: true,
-                  map: texture,
-                });
-
-                let scales = axes.map((axis) => {
-                  return scaleSqrt()
-                    .domain(coordinate_bounds[axis])
-                    .range([-box_size, box_size]);
-                });
-
-                const points = [];
-                let x = scales[0](d['tsne-X']);
-                let y = scales[1](d['tsne-Y']);
-                let z = scales[2](d['tsne-Z']);
-                points.push(v(x,y,z))
-
-                let pointGeo = new THREE.BufferGeometry().setFromPoints(points);
-                let pointsObj = new THREE.Points(pointGeo, mat);
-                pointGeo.name = d['id'].toString()
-                pointsObj.name = d['id'].toString()
-
-                scatterPlot.add(pointsObj);
-              });
-            });
-        }).catch(error => {
-          console.log('response error', error)
-        });
-        // 1個イラストを表示する
-        this.setTargetImageProperties(this.target_images[0]);
-
-        // let lineMat = new THREE.LineBasicMaterial({color: 0xFFFFFF, linewidth: 1});
-        // let line = new THREE.Line(lineGeo, lineMat);
-        // scatterPlot.add(line);
-
-        this.renderer.setSize(this.canvas_settings.canvas_width, this.canvas_settings.canvas_height);
-        this.renderer.setViewport(-1 * this.canvas_settings.canvas_offset_x, 0,  this.canvas_settings.canvas_width, this.canvas_settings.canvas_height);
-
-        this.controls.update();
-        this.renderer.render(this.scene, this.camera);
-
-        this.camera.position.set(100, 100, 100);
-      }
+  if (intersects.length > 0) {
+    let target_image_data = target_images.value.find(img => img['id'] == intersects[0].object.name);
+    if (target_image_data) {
+      await setTargetImageProperties(target_image_data);
     }
   }
+}
+
+function onResize() {
+  if (!MOUNTED) return;
+  const width = canvas.clientWidth;
+  const height = canvas_settings.canvas_height;
+  renderer.setSize(width, height);
+  camera.aspect = width / height;
+  camera.updateProjectionMatrix();
+}
+
+function filterImage() {
+  let children = scene.children[0].children;
+  if (tags.value.length === 0) {
+    children.forEach((child) => child.visible = true);
+    return;
+  }
+  const filtered_image_indices = target_images.value
+    .filter((image) => image.tags.some((tag) => tags.value.includes(tag.name)))
+    .map((image) => image.id.toString());
+
+  children.forEach((child) => {
+    child.visible = filtered_image_indices.includes(child.name);
+  });
+}
+
+function addNewTag() {
+  if (!tags.value.includes(tagName.value)) {
+    tags.value.push(tagName.value);
+    tagName.value = '';
+    filterImage();
+  }
+}
+
+function removeTag(index) {
+  tags.value.splice(index, 1);
+  filterImage();
+}
+
+async function drawScatter() {
+  let scatterPlot = new THREE.Object3D();
+  const box_size = canvas_settings.box_size;
+  scene.add(scatterPlot);
+
+  let coordinate_bounds = {};
+  const { $axios } = useNuxtApp();
+
+  try {
+    const data = await $axios.$get(api_url + 'each_illusts.json');
+    target_images.value = data.slice(0, canvas_settings.image_max);
+
+    axes.forEach((axis) => {
+      coordinate_bounds[axis] = [
+        Math.max(...target_images.value.map(o => o[axis])),
+        Math.min(...target_images.value.map(o => o[axis]))
+      ];
+    });
+
+    target_images.value.forEach(d => {
+      const loader = new THREE.TextureLoader();
+      loader.setCrossOrigin('anonymous');
+      loader.load(api_url + 'thumbs/' + d['id'] + '.webp', (texture) => {
+        let mat = new THREE.PointsMaterial({
+          color: 0xFFFFFF,
+          size: 20,
+          transparent: true,
+          map: texture,
+        });
+
+        let scales = axes.map((axis) => {
+          return scaleSqrt().domain(coordinate_bounds[axis]).range([-box_size, box_size]);
+        });
+
+        const points = [];
+        let x = scales[0](d['tsne-X']);
+        let y = scales[1](d['tsne-Y']);
+        let z = scales[2](d['tsne-Z']);
+        points.push(v(x, y, z));
+
+        let pointGeo = new THREE.BufferGeometry().setFromPoints(points);
+        let pointsObj = new THREE.Points(pointGeo, mat);
+        pointsObj.name = d['id'].toString();
+        scatterPlot.add(pointsObj);
+      });
+    });
+
+    if (target_images.value.length > 0) {
+      setTargetImageProperties(target_images.value[0]);
+    }
+  } catch (error) {
+    console.log('response error', error);
+  }
+
+  renderer.setSize(canvas_settings.canvas_width, canvas_settings.canvas_height);
+  renderer.setViewport(-1 * canvas_settings.canvas_offset_x, 0, canvas_settings.canvas_width, canvas_settings.canvas_height);
+  controls.update();
+  renderer.render(scene, camera);
+  camera.position.set(100, 100, 100);
+}
 </script>
 
 <style>

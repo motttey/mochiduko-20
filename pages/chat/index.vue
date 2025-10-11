@@ -97,23 +97,23 @@ export default {
     }),
     data: () => ({
         image_properties: {
-            DORAEMON_DEFAULT_AVATAR: "/mochiduko-20/doraemon-namecard.webp",
-            DORAEMON_POSITIVE_AVATAR: "/mochiduko-20/positive.webp",
-            DORAEMON_NEGATIVE_AVATAR: "/mochiduko-20/negative.webp"
+            DORAEMON_DEFAULT_AVATAR: "/doraemon-namecard.webp",
+            DORAEMON_POSITIVE_AVATAR: "/positive.webp",
+            DORAEMON_NEGATIVE_AVATAR: "/negative.webp"
         },
         question: '',
         questioner_properties: {
             "type": "questioner",
             "name": "望月",
             "avatar_color": "#E3F2FD",
-            "avatar_src":  "/mochiduko-20/rasaicon.webp",
+            "avatar_src":  "/rasaicon.webp",
             "isClient": true
         },
         doraemon_properties: {
             "type": "doraemon",
             "name": "ドラえもん",
             "avatar_color": "#0288D1",
-            "avatar_src":  "/mochiduko-20/doraemon-namecard.webp",
+            "avatar_src":  "/doraemon-namecard.webp",
             "isClient": false
         },
         openai_api_endpoint: "https://api.openai.com/v1/chat/completions",      

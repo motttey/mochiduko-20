@@ -17,10 +17,11 @@
 
       <v-toolbar-title
         class="title font-weight-bold"
-        v-text="title"
         @click="$router.push('/')"
         style="cursor:pointer;"
-      />
+      >
+        {{ title }}
+      </v-toolbar-title>
 
       <v-spacer />
 
@@ -41,7 +42,7 @@
 
     <v-main>
       <v-container>
-        <nuxt />
+        <slot />
       </v-container>
     </v-main>
 
@@ -51,7 +52,7 @@
       fixed
       temporary
       dark
-      src="/mochiduko-20/drawer-bg.webp"
+      src="/drawer-bg.webp"
     >
       <v-list>
         <v-list-item
@@ -102,7 +103,7 @@
     left: 0;
     background-position: 100% 100%;
     background-size: 250px auto;
-    background-image: url("~@/static/site-bg.webp");
+    background-image: url("/site-bg.webp");
     filter: blur(1.5px);
     background-color: rgba(0, 0, 0, 0.5);
     background-blend-mode: darken;
@@ -135,58 +136,31 @@
   }
 </style>
 
-<script>
-export default {
-  data () {
-    return {
-      clipped: false,
-      drawer: false,
-      fixed: false,
-      items: [
-        {
-          title: 'Top',
-          to: '#NameCard'
-        },
-        {
-          title: 'Gallery',
-          to: '#Gallery'
-        },
-        {
-          title: 'Works',
-          to: '#Works'
-        },
-        {
-          title: 'Link',
-          to: '#LinkCards'
-        }
-      ],
-      linkItems: [
-        {
-          title: 'Links (external)',
-          href: '/link'
-        },
-        {
-          title: 'Stories',
-          href: '/stories'
-        },
-        {
-          title: 'Chat',
-          href: '/chat'
-        },
-        {
-          title: 'AI generated',
-          href: '/generated'
-        }
-      ],
-      miniVariant: true,
-      right: true,
-      rightDrawer: false,
-      title: 'モチヅ庫',
-      img_source: 'http://embed.pixiv.net/decorate.php?illust_id=76601058'
-    }
-  },
-  head: () => ({
-    title: "Top"
-  })
-}
+<script setup>
+import { ref } from 'vue'
+
+const clipped = ref(false)
+const drawer = ref(false)
+const fixed = ref(false)
+const items = ref([
+  { title: 'Top', to: '#NameCard' },
+  { title: 'Gallery', to: '#Gallery' },
+  { title: 'Works', to: '#Works' },
+  { title: 'Link', to: '#LinkCards' }
+])
+const linkItems = ref([
+  { title: 'Links (external)', href: '/link' },
+  { title: 'Stories', href: '/stories' },
+  { title: 'Chat', href: '/chat' },
+  { title: 'AI generated', href: '/generated' }
+])
+const miniVariant = ref(true)
+const right = ref(true)
+const rightDrawer = ref(false)
+const title = ref('モチヅ庫')
+const img_source = ref('http://embed.pixiv.net/decorate.php?illust_id=76601058')
+
+useHead({
+  title: "Top"
+})
 </script>
