@@ -1,5 +1,5 @@
 <template>
-  <v-app dark>
+  <v-app dark class="d-flex flex-column">
     <v-app-bar
       :clipped-left="clipped"
       fixed
@@ -34,7 +34,7 @@
 
     </v-app-bar>
 
-    <v-main>
+    <v-main class="flex-grow-1">
       <div class="bg" />
       <div class="bg-img" />
       <v-container>

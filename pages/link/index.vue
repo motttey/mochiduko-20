@@ -1,13 +1,11 @@
 <template>
-  <v-layout
-    column
-    justify-center
-    align-center
+  <v-row
+    justify="center"
   >
-    <v-flex
-      xs12
-      sm9
-      md9
+    <v-col
+      cols="12"
+      sm="9"
+      md="9"
     >
       <v-container fluid>
         <v-row>
@@ -30,62 +28,52 @@
           </v-col>
         </v-row>
       </v-container>
-    </v-flex>
-  </v-layout>
+    </v-col>
+  </v-row>
 </template>
 
-<script>
+<script setup>
+import { ref, computed } from 'vue';
 import LinkTable from '~/components/LinkTable.vue'
 
-export default {
-  name: "Links",
-  components: {
-    LinkTable
-  },
-  head: () => ({
-    title: " Links"
-  }),
-  data: () => ({
-    links: [],
-    categoryLinks: {
-      "official": [],
-      "fanart": []
-    }
-  }),
-  // asyncDataに書き直す
-  methods: {
-    async getLinks() {
-      this.$axios.$get(process.env.LINKS_API_URL)
-        .then((res) => {
-          this.links = res
-          res.forEach((link, i) => {
-            if (Object.keys(this.categoryLinks).includes(link["category"])) {
-              this.categoryLinks[link["category"]].push(link)
-            }
-          });
-        })
-    }
-  },
-  computed: {
-    headers() {
-      return [
-        {
-          text: "タイトル",
-          value: "title"
-        },
-        {
-          text: "カテゴリ",
-          value: "category"
-        },
-        {
-          text: "紹介",
-          value: "description"
-        }
-      ]
-    }
-  },
-  created () {
-    this.getLinks()
-  }
+useHead({
+  title: "Links"
+})
+
+const config = useRuntimeConfig()
+const { data: links, error } = await useFetch(config.public.linksApiUrl)
+
+if (error.value) {
+  console.error('Failed to fetch links:', error.value)
 }
+
+const categoryLinks = computed(() => {
+  const categories = {
+    "official": [],
+    "fanart": []
+  };
+  if (links.value) {
+    links.value.forEach((link) => {
+      if (Object.keys(categories).includes(link["category"])) {
+        categories[link["category"]].push(link);
+      }
+    });
+  }
+  return categories;
+});
+
+const headers = ref([
+  {
+    text: "タイトル",
+    value: "title"
+  },
+  {
+    text: "カテゴリ",
+    value: "category"
+  },
+  {
+    text: "紹介",
+    value: "description"
+  }
+]);
 </script>
