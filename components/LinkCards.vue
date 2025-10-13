@@ -23,10 +23,9 @@
                       :alt="card.title + 'のアイコン'"
                       :elevation="hover ? 12 : 2"
                       loading="lazy"
-                      position='50% 80%'
                       gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.8)"
                       height="250px"
-                      aspect-ratio="1"
+                      cover
                     >
                       <v-btn
                         text

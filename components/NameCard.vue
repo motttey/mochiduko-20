@@ -1,49 +1,47 @@
 <template>
-  <v-layout
-    column
-    justify-center
-    align-center
-  >
-    <v-card id="NameCard" dark: false>
-      <v-card-title primary-title>
-        <div>
-          <div id="card-main">
-            <h1 class="mb-3">Tagosaku Mochiduki</h1>
-            <h4 class="mb-0">Hyper Doraemon Creator</h4>
+  <v-row dense class="mb-6">
+    <v-col cols="12" sm="8" offset-sm="2">
+      <v-card id="NameCard" dark: false>
+        <v-card-title primary-title>
+          <div>
+            <div id="card-main">
+              <h1 class="mb-3">Tagosaku Mochiduki</h1>
+              <h4 class="mb-0">Hyper Doraemon Creator</h4>
+            </div>
+            <div id="card-links">
+              <h5>
+                <a href="https://twitter.com/mt_tg">
+                  <font-awesome-icon :icon="['fab','twitter']" />
+                  @mt_tg
+                </a>
+              </h5>
+              <h5>
+                <a href="https://www.pixiv.net/users/415546">
+                  <font-awesome-icon :icon="['fas','image']" />
+                  https://www.pixiv.net/users/415546
+                </a>
+              </h5>
+              <h5>
+                <a href="https://motttey.github.io/">
+                  <font-awesome-icon :icon="['fas','home']" />
+                  https://motttey.github.io/
+                </a>
+              </h5>
+              <h5>
+                <font-awesome-icon :icon="['fas','envelope']" />
+                motitago@gmail.com
+              </h5>
+            </div>
+            <img id="profile-img"
+              src="/doraemon-namecard.webp"
+              alt="Doraemon"
+              class="mb-5"
+            >
           </div>
-          <div id="card-links">
-            <h5>
-              <a href="https://twitter.com/mt_tg">
-                <font-awesome-icon :icon="['fab','twitter']" />
-                @mt_tg
-              </a>
-            </h5>
-            <h5>
-              <a href="https://www.pixiv.net/users/415546">
-                <font-awesome-icon :icon="['fas','image']" />
-                https://www.pixiv.net/users/415546
-              </a>
-            </h5>
-            <h5>
-              <a href="https://motttey.github.io/">
-                <font-awesome-icon :icon="['fas','home']" />
-                https://motttey.github.io/
-              </a>
-            </h5>
-            <h5>
-              <font-awesome-icon :icon="['fas','envelope']" />
-              motitago@gmail.com
-            </h5>
-          </div>
-          <img id="profile-img"
-            src="/doraemon-namecard.webp"
-            alt="Doraemon"
-            class="mb-5"
-          >
-        </div>
-      </v-card-title>
-    </v-card>
-  </v-layout>
+        </v-card-title>
+      </v-card>
+    </v-col>
+  </v-row>
 </template>
 
 <style>
