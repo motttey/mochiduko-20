@@ -185,7 +185,7 @@ async function selectImage(mousePos) {
   if (intersects.length > 0) {
     let target_image_data = target_images.value.find(img => img['id'] == intersects[0].object.name);
     if (target_image_data) {
-      await setTargetImageProperties(target_image_data);
+      setTargetImageProperties(target_image_data);
     }
   }
 }
@@ -253,7 +253,7 @@ function drawScatter() {
   target_images.value.forEach(d => {
     const loader = new THREE.TextureLoader();
     loader.setCrossOrigin('anonymous');
-    loader.load(api_url + 'thumbs/' + d['id'] + '.webp', (texture) => {
+    loader.load(api_url + 'thumbnails/' + d['id'] + '.jpg', (texture) => {
       let mat = new THREE.PointsMaterial({
         color: 0xFFFFFF,
         size: 20,
