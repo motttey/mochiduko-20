@@ -2,12 +2,26 @@ import { defineNuxtPlugin } from 'nuxt/app'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
+import { fa } from 'vuetify/iconsets/fa-svg'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+library.add(fas)
 
 export default defineNuxtPlugin(nuxtApp => {
+  nuxtApp.vueApp.component('font-awesome-icon', FontAwesomeIcon)
+
   const vuetify = createVuetify({
     ssr: false,
     components,
     directives,
+    icons: {
+      defaultSet: 'fa',
+      sets: {
+        fa,
+      },
+    },
     theme: {
       defaultTheme: 'dark',
       themes: {

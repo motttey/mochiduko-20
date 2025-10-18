@@ -2,17 +2,13 @@
   <v-app dark class="d-flex flex-column">
     <v-app-bar
       :clipped-left="clipped"
-      fixed
-      app
-      :src="img_source"
+      color="teal-darken-6"
+      :image="img_source"
     >
-      <template v-slot:img="{ props }">
+      <template v-slot:image>
         <v-img
-          v-bind="props"
-          position='50% 60%'
-          gradient="to top right, rgba(2,136,209,.7), rgba(0,0,0,1.0)"
-        >
-        </v-img>
+          gradient="to top right, rgba(19,84,122,.8), rgba(128,208,199,.8)"
+        ></v-img>
       </template>
 
       <v-toolbar-title
@@ -29,7 +25,7 @@
         icon
         @click.stop="rightDrawer = !rightDrawer"
       >
-        <v-icon>mdi-menu</v-icon>
+        <v-icon>fas fa-bars</v-icon>
       </v-btn>
 
     </v-app-bar>
@@ -44,11 +40,11 @@
 
     <v-navigation-drawer
       v-model="rightDrawer"
-      :right="right"
+      location="right"
       fixed
       temporary
-      dark
-      src="/drawer-bg.webp"
+      theme="dark"
+      image="/drawer-bg.webp"
     >
       <v-list>
         <v-list-item
@@ -100,6 +96,7 @@
     filter: blur(1.5px);
     background-color: rgba(0, 0, 0, 0.5);
     background-blend-mode: darken;
+    z-index: -1;
   }
 
   .bg {
@@ -127,13 +124,21 @@
   .theme--dark.v-data-table {
     background-color: rgba(30, 30, 30, 0.5);
   }
+
+  .gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: linear-gradient(to top right, rgba(2,136,209,.7), rgba(0,0,0,1.0));
+  }
 </style>
 
 <script setup>
 import { ref } from 'vue'
 
 const clipped = ref(false)
-const drawer = ref(false)
 const fixed = ref(false)
 const items = ref([
   { title: 'Top', to: '#NameCard' },
@@ -147,8 +152,6 @@ const linkItems = ref([
   { title: 'Chat', href: '/chat' },
   { title: 'AI generated', href: '/generated' }
 ])
-const miniVariant = ref(true)
-const right = ref(true)
 const rightDrawer = ref(false)
 const title = ref('モチヅ庫')
 const img_source = ref('http://embed.pixiv.net/decorate.php?illust_id=76601058')
