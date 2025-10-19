@@ -41,16 +41,6 @@ export default defineNuxtConfig({
   modules: [
     '@pinia/nuxt',
   ],
-  hooks: {
-    'vite:extendConfig': (config) => {
-      config.plugins = config.plugins || []
-      config.plugins.push(
-        vuetify({
-          autoImport: true,
-        })
-      )
-    }
-  },
   runtimeConfig: {
     public: {
       pixivApiUrl: process.env.PIXIV_API_URL,
@@ -68,6 +58,11 @@ export default defineNuxtConfig({
     '/motttey/**': { proxy: 'https://motttey.github.io/gallery/**' },
   },
   vite: {
+    plugins: [
+      vuetify({
+        autoImport: true,
+      }),
+    ],
     css: {
       preprocessorOptions: {
         scss: {
