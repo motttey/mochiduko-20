@@ -40,9 +40,13 @@ export default defineNuxtConfig({
   ],
   modules: [
     '@pinia/nuxt',
+    'nuxt-gtag',
   ],
   runtimeConfig: {
     public: {
+      gtag: {
+        id: process.env.GOOGLE_ANALYTICS_ID,
+      },
       pixivApiUrl: process.env.PIXIV_API_URL,
       linksApiUrl: process.env.LINKS_API_URL,
       storiesApiUrl: process.env.STORIES_API_URL,
