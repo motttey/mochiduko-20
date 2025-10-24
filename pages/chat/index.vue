@@ -86,6 +86,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 // import { v4 as uuidv4 } from 'uuid';
+const { data: session, signIn, signOut } = useAuth()
 
 useHead({
     title: "しつもん! ドラえもん"
@@ -224,14 +225,6 @@ function onFileChange(event) {
 }
 
 onMounted(async () => {
-    // Nuxt 3では$authは使えないため、認証関連の処理はコメントアウトまたは削除します。
-    // 認証が必要な場合は、Nuxt 3の認証ライブラリ（例: @sidebase/nuxt-auth）を導入する必要があります。
-    
-    // const userId = uuidv4();
-    // if (userId) {
-    //     // Piniaストアの利用方法もNuxt 3の作法に合わせる必要があります
-    // }
-
     const default_input =
         'これ以降の対話では、必ず以下のルールに従ってください。\n'
         + 'あなたは「ドラえもん」として質問者の入力したテキストに回答ます。\n'

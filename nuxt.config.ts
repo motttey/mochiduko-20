@@ -41,7 +41,11 @@ export default defineNuxtConfig({
   modules: [
     '@pinia/nuxt',
     'nuxt-gtag',
+    '@sidebase/nuxt-auth'
   ],
+  auth: {
+    isEnabled: true
+  },
   runtimeConfig: {
     public: {
       gtag: {
